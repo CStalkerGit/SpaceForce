@@ -77,11 +77,11 @@ public class Engine : MonoBehaviour
     /// <summary>
     /// Проверка взаимодействия игрока с бонусом
     /// </summary>
-    public static Entity IsBonusCollision(Entity entity)
+    public static Bonus IsBonusCollision(Entity entity)
     {
         foreach (var bonus in bonuses)
         {
-            if (bonus.IsCollission(entity)) return bonus;
+            if (bonus.IsCollission(entity)) return (Bonus)bonus;
         }
 
         return null;

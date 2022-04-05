@@ -85,11 +85,11 @@ public class Entity : MonoBehaviour
     /// <summary>
     /// Уничтожить объект
     /// </summary>
-    public void Damage(int damageAmount)
+    public void Damage(int amountDamage)
     {
         if (IsDead == false)
         {
-            health -= damageAmount;
+            health -= amountDamage;
             if (health <= 0) Kill();
         }
     }
@@ -99,22 +99,22 @@ public class Entity : MonoBehaviour
     /// </summary>
     public void Kill()
     {
-        if (IsDead) return;
+        if (IsDead) return; // объект был уже уничтожен ранее
 
         IsDead = true;
         Destroy(gameObject);
         UnregEntity();
     }
 
-    // override
+    // virtual methods
 
     protected virtual void RegEntity()
     {
-        
+        //Debug.LogWarning("No virtual method override");
     }
 
     protected virtual void UnregEntity()
     {
-
+        //Debug.LogWarning("No virtual method override");
     }
 }

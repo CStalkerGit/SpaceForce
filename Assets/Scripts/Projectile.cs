@@ -19,8 +19,10 @@ public class Projectile : Entity
     float animationTime;
     int animationFrame;
 
-    void FixedUpdate()
+    new void FixedUpdate()
     {
+        base.FixedUpdate();
+
         transform.position += velocity * Time.deltaTime;
 
         // покадровая анимация спрайта, если доступна
@@ -89,5 +91,17 @@ public class Projectile : Entity
     {
         direction.Normalize();
         velocity = direction * speed;
+    }
+
+    // override methods
+
+    protected override void RegEntity()
+    {
+
+    }
+
+    protected override void UnregEntity()
+    {
+
     }
 }

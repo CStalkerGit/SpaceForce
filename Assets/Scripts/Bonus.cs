@@ -4,6 +4,33 @@ using UnityEngine;
 
 public class Bonus : Entity
 {
+    [Header("Bonus Effects")]
+    [Tooltip("Восстанавливает утраченное здоровье, не превышая максимум")]
+    public int restoreHealth;
+    [Tooltip("Улучшает вооружение игрока")]
+    public bool upgradeWeapon;
+
+    const float speed = 1.5f;
+
+    new void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        // бонусы медленно опускаются вниз по карте 
+        Vector3 pos = transform.position;
+        pos.y -= speed * Time.deltaTime;
+        transform.position = pos;
+    }
+
+    public void Apply()
+    {
+        if (IsDead) return;
+
+        if (restoreHealth > 0) Player.RestoreHealth(restoreHealth);
+    }
+
+    // override methods
+
     protected override void RegEntity()
     {
         Engine.bonuses.Add(this);

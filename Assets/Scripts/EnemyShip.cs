@@ -8,9 +8,11 @@ public class EnemyShip : Entity
     {
         base.FixedUpdate();
 
-        // если враг столкнулся с игроком, то врага нужно унитожить.
+        // если враг столкнулся с игроком, то врага нужно уничтожить.
         if (Player.TestHit(this)) Kill();
     }
+
+    // override methods
 
     protected override void RegEntity()
     {

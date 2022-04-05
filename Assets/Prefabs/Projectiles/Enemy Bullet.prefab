@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e070028a26320942b0da61296ae29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.5
+  hitboxRadius: 0.25
   isEnemy: 1
   health: 1
   damage: 1
