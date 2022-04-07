@@ -18,13 +18,11 @@ public class TileObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        // проверка выхода за границу экрана
-        if (Engine.OutOfBoundsBottom(transform.localPosition, 1.0f)) entity.Kill();
 
-        //Vector3 newDirection = Player.position - transform.position;
-        //newDirection.z = 0;
-        //newDirection.Normalize();
+    }
 
-        //transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
+    protected virtual void OnKillByEntity()
+    {
+        //Engine.CreateExplosionEffect(transform.position);
     }
 }

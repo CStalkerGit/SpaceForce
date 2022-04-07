@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class Engine : MonoBehaviour
 {
     public Tilemap tilemap;
+    public Effect explosionPrefab;
 
     public const float scrollingSpeed = 2.0f;
 
@@ -14,10 +16,19 @@ public class Engine : MonoBehaviour
     public static List<Entity> enemies = new List<Entity>();
     public static List<Entity> bonuses = new List<Entity>();
 
+    public static Vector3 TilemapOffset { get; private set; }
+
+    // для смены сцены в случае победы или поражения
+    private bool changeScene = false;
+    private float changeSceneTime = 2.5f;
+
     private void Awake()
     {
         instance = this;
         tilemapPos = tilemap.transform.position;
+
+        enemies.Clear();
+        bonuses.Clear();
     }
 
     private void FixedUpdate()
@@ -25,6 +36,27 @@ public class Engine : MonoBehaviour
         // скроллинг карты вниз
         tilemapPos.y -= scrollingSpeed * Time.deltaTime;
         tilemap.transform.position = tilemapPos;
+
+        // проверка на необходимость загрузки следующей сцены (титульного экрана или следующего уровня)
+        if (changeScene)
+        {
+            changeSceneTime -= Time.deltaTime;
+            if (changeSceneTime < 0) SceneManager.LoadScene("TitleScreen");
+        }
+        else
+        {
+            // проверка на гибель игрока
+            if (Player.IsPlayerDead()) changeScene = true;
+        }
+
+        // проверка на конец карты
+        if (tilemap.transform.position.y < -tilemap.size.y - 8)
+        {
+            changeScene = true;
+            Debug.Log("The end of the level");
+        }
+
+        TilemapOffset = instance.tilemap.transform.position;
     }
 
     /// <summary>
@@ -63,12 +95,13 @@ public class Engine : MonoBehaviour
             if (enemy.IsCollission(entity)) return enemy;
         }
 
-        TerrainTile tile = instance.tilemap.GetTile<TerrainTile>(entity.GetTilePosition(instance.tilemap.transform.position));
+        TerrainTile tile = instance.tilemap.GetTile<TerrainTile>(entity.GetTilePosition());
         if (tile)
         {
             // получение объекта, находящегося на тайле
             Entity tileObject = GetInstantiatedObject(entity);
-            if (tileObject) if (tileObject.IsCollission(entity)) return tileObject;
+            if (tileObject)
+                if (tileObject.IsCollission(entity)) return tileObject;
         }
 
         return null;
@@ -88,12 +121,33 @@ public class Engine : MonoBehaviour
     }
 
     /// <summary>
+    /// Проверка взаимодействия игрока с бонусом
+    /// </summary>
+    public static Entity GetNearestEnemy(Entity entity)
+    {
+        foreach (var bonus in bonuses)
+        {
+            if (bonus.IsCollission(entity)) return (Bonus)bonus;
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Получить находящийся на тайле объект по координатам entity
     /// </summary>
     public static Entity GetInstantiatedObject(Entity entity)
     {
         // получение GameObject, ассоциированного с тайлом
-        GameObject obj = instance.tilemap.GetInstantiatedObject(entity.GetTilePosition(instance.tilemap.transform.position));
+        GameObject obj = instance.tilemap.GetInstantiatedObject(entity.GetTilePosition());
         if (obj) return obj.GetComponent<Entity>(); else return null;
+    }
+
+    /// <summary>
+    /// Создать эффект взрыва 
+    /// </summary>
+    public static void CreateExplosionEffect(Vector3 position)
+    {
+        Instantiate(instance.explosionPrefab, position, Quaternion.identity);
     }
 }

@@ -14,6 +14,7 @@ public class EnemyShip : Entity
 
     // override methods
 
+    // регистрация вражеского корабля в списке видимых врагов на экране
     protected override void RegEntity()
     {
         Engine.enemies.Add(this);

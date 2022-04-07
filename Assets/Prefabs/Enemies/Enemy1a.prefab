@@ -96,7 +96,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxRadius: 0.5
   isEnemy: 1
-  health: 1
+  health: 2
+  animationSprites: []
+  animationSpeed: 0.25
 --- !u!114 &114987959807686934
 MonoBehaviour:
   m_ObjectHideFlags: 0

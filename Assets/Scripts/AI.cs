@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyShip))]
 public class AI : MonoBehaviour
 {
+    public bool patternSin;
+    public float speed = 3;
+
+    private float sinusoid;
+
     // components
     public EnemyShip enemyShip { get; private set; }
 
@@ -18,9 +23,14 @@ public class AI : MonoBehaviour
     {
         if (enemyShip.IsDormant) return;
 
+        // для паттерна синусоиды
+        sinusoid += Time.deltaTime;
+        if (sinusoid > Mathf.PI) sinusoid -= Mathf.PI * 2;
+
         Vector3 pos = transform.position;
 
-        pos.y -= 3 * Time.deltaTime;
+        pos.y -= speed * Time.deltaTime;
+        if (patternSin) pos.x = Mathf.Sin(sinusoid) * 5;
 
         transform.position = pos;
     }

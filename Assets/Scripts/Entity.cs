@@ -13,36 +13,57 @@ public class Entity : MonoBehaviour
 
     public int health = 1;
 
+    [Header("Sprite Animation")]
+    [Tooltip("Массив спрайтов, если нужна покадровая анимация")]
+    public Sprite[] animationSprites;
+    [Tooltip("Скорость смены кадров анимации, в секундах")]
+    public float animationSpeed = 0.25f;
+
     // components
     public SpriteRenderer spriteRenderer { get; private set; }
 
     public float PosX { get => transform.position.x; }
     public float PosY { get => transform.position.y; }
 
-    public bool IsDormant { get; private set; } // объект бездействует, пока не появится на экране
+    /// <summary>
+    /// Объект бездействует, пока не появится на экране
+    /// </summary>
+    public bool IsDormant { get; private set; }
     public bool IsDead { get; private set; } // объект был уничтожен
+
+    // sprite animation
+    // TODO перенести анимацию в отдельный класс
+    private float animationTime;
+    private int animationFrame; // текущий кадр анимации
+
+    private bool isTileObject; // FIXME
 
     protected void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         IsDormant = true;
+
+        // устанавливаем первый кадр анимации, если она доступна
+        if (animationSprites.Length > 0) spriteRenderer.sprite = animationSprites[0];
+
+        isTileObject = GetComponent<TileObject>();
     }
 
     protected void FixedUpdate()
     {
+        // проверка на бездействие объекта (такие находятся вне экрана игрока)
         if (IsDormant)
         {
-            // бездействующий объект двигается вниз вместе с картой
+            // бездействующий объект двигается вниз одновременно вместе с картой тайлов
             Vector3 pos = transform.position;
             pos.y -= Engine.scrollingSpeed * Time.deltaTime;
-            transform.position = pos;
-
-            // если объект показался на экране
+            if (!isTileObject) transform.position = pos; // FIXME тайловые объекты сдвигаются вместе с картой
+             
+            // если объект при этом показался на экране
             if (Engine.OutOfBounds(transform.position, 1.0f) == false)
             {
-                // зарегистрировать, чтобы включить взаимодействие игрока с этим объектом
-                RegEntity();
-                IsDormant = false;
+                RegEntity(); // зарегистрировать, чтобы включить взаимодействие игрока с этим объектом
+                IsDormant = false; // объект больше не бездействует 
             }
         }
         else
@@ -50,12 +71,27 @@ public class Entity : MonoBehaviour
             // Если уже активированный объект вышел за границы экрана, то его надо уничтожить
             if (Engine.OutOfBounds(transform.position, 1.0f)) Kill();
         }
+
+        // покадровая анимация спрайта, если доступна (есть 2 спрайта или больше)
+        if (animationSprites.Length > 1)
+        {
+            animationTime += Time.deltaTime;
+
+            // смена кадра анимации
+            if (animationTime >= animationSpeed)
+            {
+                animationTime = 0;
+                animationFrame++;
+                if (animationFrame >= animationSprites.Length) animationFrame = 0;
+                spriteRenderer.sprite = animationSprites[animationFrame];
+            }
+        }
     }
 
     void OnDrawGizmos()
     {
         // отрисовка хитбокса объекта в режиме отладки
-        Gizmos.DrawWireCube(transform.position, new Vector3(hitboxRadius * 2, hitboxRadius * 2, 0.01f));
+        //Gizmos.DrawWireCube(transform.position, new Vector3(hitboxRadius * 2, hitboxRadius * 2, 0.01f));
     }
 
     public bool IsCollission(Entity entity)
@@ -76,9 +112,9 @@ public class Entity : MonoBehaviour
     /// <summary>
     /// Получить позицию объекта для TileMap
     /// </summary>
-    public Vector3Int GetTilePosition(Vector3 tilemapPos)
+    public Vector3Int GetTilePosition()
     {
-        Vector3 pos = transform.localPosition - tilemapPos;
+        Vector3 pos = transform.localPosition - Engine.TilemapOffset;
         return new Vector3Int(Mathf.RoundToInt(pos.x - 0.5f), Mathf.RoundToInt(pos.y - 0.5f), 0);
     }
 
@@ -90,16 +126,19 @@ public class Entity : MonoBehaviour
         if (IsDead == false)
         {
             health -= amountDamage;
-            if (health <= 0) Kill();
+            if (health <= 0) Kill(true);
         }
     }
 
     /// <summary>
     /// Уничтожить объект
     /// </summary>
-    public void Kill()
+    /// <param name="byEntity"/>Объект был уничтожен другим объектом, для вызова соответствующих обработчиков</param>
+    public void Kill(bool byEntity = false)
     {
         if (IsDead) return; // объект был уже уничтожен ранее
+
+        //if (byEntity) OnKillByEntity();
 
         IsDead = true;
         Destroy(gameObject);
@@ -108,6 +147,8 @@ public class Entity : MonoBehaviour
 
     // virtual methods
 
+    // регистрация объекта в нужном списке, для последующей проверки на столкновения
+    // переопределяется в производных классах при необходимости
     protected virtual void RegEntity()
     {
         //Debug.LogWarning("No virtual method override");
@@ -116,5 +157,14 @@ public class Entity : MonoBehaviour
     protected virtual void UnregEntity()
     {
         //Debug.LogWarning("No virtual method override");
+    }
+
+    /// <summary>
+    /// Функция вызывается при уничтожении объекта с помощью другого entity (снаряда или кораблем)
+    /// Функция НЕ вызывается, если объект исчезает за пределами экрана или при закрытии сцены
+    /// </summary>
+    protected virtual void OnKillByEntity()
+    { 
+
     }
 }

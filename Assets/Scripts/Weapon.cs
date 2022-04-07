@@ -7,7 +7,8 @@ public enum FireDirection
     Random,
     NearestEnemy,
     Up,
-    Down
+    Down,
+    Spread
 }
 
 public class Weapon : MonoBehaviour
@@ -80,6 +81,21 @@ public class Weapon : MonoBehaviour
             case FireDirection.Down:
                 {
                     projectile.SetDirection(new Vector3(0, -1, 0));
+                    break;
+                }
+
+            case FireDirection.Spread:
+                {
+                    projectile.SetDirection(new Vector3(0, 1, 0));
+
+                    for (float f = -Mathf.PI; f < Mathf.PI; f += Mathf.PI / 4)
+                    {
+                        projectile = Instantiate(projPrefab);
+                        projectile.transform.position = transform.position + (Vector3)projStartPoint;
+                        projectile.Init(projSpeed, isEnemy);
+                        projectile.SetDirection(new Vector3(Mathf.Cos(f), Mathf.Sin(f), 0));
+                    }
+
                     break;
                 }
 

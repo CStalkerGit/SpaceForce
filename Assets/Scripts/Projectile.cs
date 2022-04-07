@@ -2,43 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Projectile : Entity
 {
     [Header("Projectile")]
     public int damage = 1;
 
-    [Header("Sprite Animation")]
-    public Sprite[] animationSprites;
-    public float animationSpeed = 0.25f;
-
     // physics
     float speed;
     Vector3 velocity;
-
-    // sprite animation
-    float animationTime;
-    int animationFrame;
 
     new void FixedUpdate()
     {
         base.FixedUpdate();
 
         transform.position += velocity * Time.deltaTime;
-
-        // покадровая анимация спрайта, если доступна
-        if (animationSprites.Length > 0)
-        {
-            animationTime += Time.deltaTime;
-
-            // смена кадра анимации
-            if (animationTime >= animationSpeed)
-            {
-                animationTime = 0;
-                animationFrame++;
-                if (animationFrame >= animationSprites.Length) animationFrame = 0;
-                spriteRenderer.sprite = animationSprites[animationFrame];
-            }
-        }
         
         if (isEnemy)
         {
@@ -53,6 +31,7 @@ public class Projectile : Entity
             {
                 // наносим урон врагу и уничтожаем снаряд
                 enemy.Damage(damage);
+                if (enemy.health < 1) Engine.CreateExplosionEffect(enemy.transform.position); // FIXME
                 Kill();
             }
         }
@@ -95,6 +74,7 @@ public class Projectile : Entity
 
     // override methods
 
+    // регистрация пока не требуется, посколько снаряды сами взаимодействуют с другими объектами
     protected override void RegEntity()
     {
 
