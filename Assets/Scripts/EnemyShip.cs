@@ -8,13 +8,13 @@ public class EnemyShip : Entity
     {
         base.FixedUpdate();
 
-        // если враг столкнулся с игроком, то врага нужно уничтожить.
+        // Delete the enemy on player collision
         if (Player.TestHit(this)) Kill();
     }
 
     // override methods
 
-    // регистрация вражеского корабля в списке видимых врагов на экране
+    // Adding the enemy ship to the list of foes currently visible on the screen
     protected override void RegEntity()
     {
         Engine.enemies.Add(this);
