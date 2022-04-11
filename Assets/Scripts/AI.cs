@@ -11,6 +11,7 @@ public class AI : MonoBehaviour
     private float sinusoid;
 
     // components
+    // test comment
     public EnemyShip enemyShip { get; private set; }
 
     void Awake()
