@@ -12,6 +12,7 @@ public class AI : MonoBehaviour
 
     // components
     // test comment
+    // test comment 2
     public EnemyShip enemyShip { get; private set; }
 
     void Awake()
