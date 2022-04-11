@@ -9,14 +9,12 @@ public class Engine : MonoBehaviour
     public Tilemap tilemap;
     public Effect explosionPrefab;
 
-    public const float scrollingSpeed = 2.0f;
+    public const float scrollingSpeed = 2.5f;
 
-    private Vector3 tilemapPos;
+    private Vector3 cameraPos;
     private static Engine instance;
     public static List<Entity> enemies = new List<Entity>();
     public static List<Entity> bonuses = new List<Entity>();
-
-    public static Vector3 TilemapOffset { get; private set; }
 
     // для смены сцены в случае победы или поражения
     private bool changeScene = false;
@@ -25,7 +23,7 @@ public class Engine : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        tilemapPos = tilemap.transform.position;
+        cameraPos = Camera.main.transform.position;
 
         enemies.Clear();
         bonuses.Clear();
@@ -33,9 +31,9 @@ public class Engine : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // скроллинг карты вниз
-        tilemapPos.y -= scrollingSpeed * Time.deltaTime;
-        tilemap.transform.position = tilemapPos;
+        // скроллинг камеры вверх
+        cameraPos.y += scrollingSpeed * Time.deltaTime;
+        Camera.main.transform.position = cameraPos;
 
         // проверка на необходимость загрузки следующей сцены (титульного экрана или следующего уровня)
         if (changeScene)
@@ -55,8 +53,6 @@ public class Engine : MonoBehaviour
             changeScene = true;
             Debug.Log("The end of the level");
         }
-
-        TilemapOffset = instance.tilemap.transform.position;
     }
 
     /// <summary>
@@ -68,6 +64,7 @@ public class Engine : MonoBehaviour
     {
         float height = 2f * Camera.main.orthographicSize;
         float width = height * Camera.main.aspect;
+        position -= instance.cameraPos; // смещение относительно текущего положения камеры
 
         if (position.x < -width / 2 - offset || position.x > width / 2 + offset) return true;
         if (position.y < -height / 2 - offset || position.y > height / 2 + offset) return true;
@@ -81,7 +78,7 @@ public class Engine : MonoBehaviour
     /// <param name="offset">смещение от нижнего края экрана</param>
     public static bool OutOfBoundsBottom(Vector3 position, float offset)
     {
-        if (position.y < -Camera.main.orthographicSize - offset) return true;
+        if (position.y < -Camera.main.orthographicSize - offset - instance.cameraPos.y) return true;
         return false;
     }
 

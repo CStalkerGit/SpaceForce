@@ -37,6 +37,10 @@ public class Player : Entity
 
         float distance = speed * Time.deltaTime;
 
+        Vector3 pos = transform.localPosition;
+        pos.y += Engine.scrollingSpeed * Time.deltaTime;
+        transform.localPosition = pos;
+
         // во избежание дрожания объекта
         if (direction.x * direction.x + direction.y * direction.y <= distance * distance)
         {
@@ -52,10 +56,12 @@ public class Player : Entity
         }
 
         // ограничение движения игрока за пределы экрана
-        float height = 2f * Camera.main.orthographicSize;
-        float width = height * Camera.main.aspect;
-        float x = Mathf.Clamp(transform.localPosition.x, -width / 2, width / 2);
-        float y = Mathf.Clamp(transform.localPosition.y, -height / 2, height / 2);
+        float offsetY = Camera.main.transform.position.y;
+        float offsetX = Camera.main.transform.position.x;
+        float boundY = Camera.main.orthographicSize; 
+        float boundX = Camera.main.orthographicSize * Camera.main.aspect + Camera.main.transform.position.x;
+        float x = Mathf.Clamp(transform.localPosition.x, -boundX + offsetX, boundX + offsetX);
+        float y = Mathf.Clamp(transform.localPosition.y, -boundY + offsetY, boundY + offsetY);
         transform.localPosition = new Vector3(x, y, 0);
 
         // позиция игрока для стрельбы врагами по нему 
@@ -149,5 +155,10 @@ public class Player : Entity
     {
         if (!instance) return true;
         return instance.IsDead;
+    }
+
+    protected override void OnOutOfBounds()
+    {
+
     }
 }

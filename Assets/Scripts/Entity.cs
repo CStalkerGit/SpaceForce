@@ -55,9 +55,9 @@ public class Entity : MonoBehaviour
         if (IsDormant)
         {
             // бездействующий объект двигается вниз одновременно вместе с картой тайлов
-            Vector3 pos = transform.position;
-            pos.y -= Engine.scrollingSpeed * Time.deltaTime;
-            if (!isTileObject) transform.position = pos; // FIXME тайловые объекты сдвигаются вместе с картой
+            //Vector3 pos = transform.position;
+            //pos.y -= Engine.scrollingSpeed * Time.deltaTime;
+            //if (!isTileObject) transform.position = pos; // FIXME тайловые объекты сдвигаются вместе с картой
              
             // если объект при этом показался на экране
             if (Engine.OutOfBounds(transform.position, 1.0f) == false)
@@ -68,8 +68,7 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            // Если уже активированный объект вышел за границы экрана, то его надо уничтожить
-            if (Engine.OutOfBounds(transform.position, 1.0f)) Kill();
+            if (Engine.OutOfBounds(transform.position, 1.0f)) OnOutOfBounds();
         }
 
         // покадровая анимация спрайта, если доступна (есть 2 спрайта или больше)
@@ -114,7 +113,7 @@ public class Entity : MonoBehaviour
     /// </summary>
     public Vector3Int GetTilePosition()
     {
-        Vector3 pos = transform.localPosition - Engine.TilemapOffset;
+        Vector3 pos = transform.localPosition;
         return new Vector3Int(Mathf.RoundToInt(pos.x - 0.5f), Mathf.RoundToInt(pos.y - 0.5f), 0);
     }
 
@@ -166,5 +165,13 @@ public class Entity : MonoBehaviour
     protected virtual void OnKillByEntity()
     { 
 
+    }
+
+    /// <summary>
+    /// Функция вызывается при выходе объекта с экрана
+    /// </summary>
+    protected virtual void OnOutOfBounds()
+    {
+        Kill();
     }
 }
