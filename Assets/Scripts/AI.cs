@@ -36,4 +36,9 @@ public class AI : MonoBehaviour
 
         transform.position = pos;
     }
+
+    void TestFunction()
+    {
+
+    }
 }
