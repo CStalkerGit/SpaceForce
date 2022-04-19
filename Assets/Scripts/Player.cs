@@ -57,12 +57,21 @@ public class Player : Entity
 
         // ограничение движения игрока за пределы экрана
         float offsetY = Camera.main.transform.position.y;
-        float offsetX = Camera.main.transform.position.x;
-        float boundY = Camera.main.orthographicSize; 
-        float boundX = Camera.main.orthographicSize * Camera.main.aspect + Camera.main.transform.position.x;
-        float x = Mathf.Clamp(transform.localPosition.x, -boundX + offsetX, boundX + offsetX);
+        float boundY = Camera.main.orthographicSize;
+        float boundX = Camera.main.orthographicSize * Engine.GameAspect;
+        float x = Mathf.Clamp(transform.localPosition.x, -boundX, boundX);
         float y = Mathf.Clamp(transform.localPosition.y, -boundY + offsetY, boundY + offsetY);
         transform.localPosition = new Vector3(x, y, 0);
+
+        // горизонтальный скроллинг камеры, если она не полностью помещается на экране игрока
+        Vector3 cameraPos = Camera.main.transform.position;
+        if (Camera.main.aspect < Engine.GameAspect)
+        {
+            float aspect = 1 - (Camera.main.pixelWidth * Camera.main.aspect) / (Camera.main.pixelWidth * Engine.GameAspect);
+            cameraPos.x = transform.localPosition.x * aspect;
+        }
+        else cameraPos.x = 0;
+        Camera.main.transform.position = cameraPos;
 
         // позиция игрока для стрельбы врагами по нему 
         position = transform.position;

@@ -9,6 +9,7 @@ public class Engine : MonoBehaviour
     public Tilemap tilemap;
     public Effect explosionPrefab;
 
+    public const float GameAspect = 0.6f;
     public const float scrollingSpeed = 2.5f;
 
     private Vector3 cameraPos;
@@ -32,8 +33,8 @@ public class Engine : MonoBehaviour
     private void FixedUpdate()
     {
         // скроллинг камеры вверх
-        cameraPos.y += scrollingSpeed * Time.deltaTime;
-        Camera.main.transform.position = cameraPos;
+        //cameraPos.y += scrollingSpeed * Time.deltaTime;
+        //Camera.main.transform.position = cameraPos;
 
         // проверка на необходимость загрузки следующей сцены (титульного экрана или следующего уровня)
         if (changeScene)
