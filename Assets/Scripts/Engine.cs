@@ -6,13 +6,16 @@ using UnityEngine.Tilemaps;
 
 public class Engine : MonoBehaviour
 {
-    public Tilemap tilemap;
+    public ScrollingMap map;
     public Effect explosionPrefab;
+
+    // interpolation
+    public static float alpha = 0;
 
     public const float GameAspect = 0.6f;
     public const float scrollingSpeed = 2.5f;
+    public const float PPU = 16; // pixels per unit
 
-    private Vector3 cameraPos;
     private static Engine instance;
     public static List<Entity> enemies = new List<Entity>();
     public static List<Entity> bonuses = new List<Entity>();
@@ -21,21 +24,22 @@ public class Engine : MonoBehaviour
     private bool changeScene = false;
     private float changeSceneTime = 2.5f;
 
+
     private void Awake()
     {
         instance = this;
-        cameraPos = Camera.main.transform.position;
 
         enemies.Clear();
         bonuses.Clear();
     }
 
+    void Update()
+    {
+        alpha = (Time.time - Time.fixedTime) / Time.fixedDeltaTime;
+    }
+
     private void FixedUpdate()
     {
-        // скроллинг камеры вверх
-        //cameraPos.y += scrollingSpeed * Time.deltaTime;
-        //Camera.main.transform.position = cameraPos;
-
         // проверка на необходимость загрузки следующей сцены (титульного экрана или следующего уровня)
         if (changeScene)
         {
@@ -49,7 +53,7 @@ public class Engine : MonoBehaviour
         }
 
         // проверка на конец карты
-        if (tilemap.transform.position.y < -tilemap.size.y - 8)
+        if (map.IsMapEnd())
         {
             changeScene = true;
             Debug.Log("The end of the level");
@@ -63,13 +67,7 @@ public class Engine : MonoBehaviour
     /// <param name="offset">дополнительное смещение от краев экрана</param>
     public static bool OutOfBounds(Vector3 position, float offset)
     {
-        float height = 2f * Camera.main.orthographicSize;
-        float width = height * Camera.main.aspect;
-        position -= instance.cameraPos; // смещение относительно текущего положения камеры
-
-        if (position.x < -width / 2 - offset || position.x > width / 2 + offset) return true;
-        if (position.y < -height / 2 - offset || position.y > height / 2 + offset) return true;
-        return false;
+        return instance.map.OutOfBounds(position, offset);
     }
 
     /// <summary>
@@ -79,7 +77,7 @@ public class Engine : MonoBehaviour
     /// <param name="offset">смещение от нижнего края экрана</param>
     public static bool OutOfBoundsBottom(Vector3 position, float offset)
     {
-        if (position.y < -Camera.main.orthographicSize - offset - instance.cameraPos.y) return true;
+        if (position.y < 0 - offset) return true;
         return false;
     }
 
@@ -93,14 +91,14 @@ public class Engine : MonoBehaviour
             if (enemy.IsCollission(entity)) return enemy;
         }
 
-        TerrainTile tile = instance.tilemap.GetTile<TerrainTile>(entity.GetTilePosition());
-        if (tile)
-        {
-            // получение объекта, находящегося на тайле
-            Entity tileObject = GetInstantiatedObject(entity);
-            if (tileObject)
-                if (tileObject.IsCollission(entity)) return tileObject;
-        }
+        //TerrainTile tile = instance.map.GetTile<TerrainTile>(entity.GetTilePosition());
+        //if (tile)
+        //{
+        //    // получение объекта, находящегося на тайле
+        //    Entity tileObject = GetInstantiatedObject(entity);
+        //    if (tileObject)
+        //        if (tileObject.IsCollission(entity)) return tileObject;
+        //}
 
         return null;
     }
@@ -129,16 +127,6 @@ public class Engine : MonoBehaviour
         }
 
         return null;
-    }
-
-    /// <summary>
-    /// Получить находящийся на тайле объект по координатам entity
-    /// </summary>
-    public static Entity GetInstantiatedObject(Entity entity)
-    {
-        // получение GameObject, ассоциированного с тайлом
-        GameObject obj = instance.tilemap.GetInstantiatedObject(entity.GetTilePosition());
-        if (obj) return obj.GetComponent<Entity>(); else return null;
     }
 
     /// <summary>

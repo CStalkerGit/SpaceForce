@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -399,6 +400,26 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 16
+  m_RefResolutionX: 180
+  m_RefResolutionY: 240
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -638,7 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e7448566361e245ac22164d362d912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 778159606}
+  map: {fileID: 778159607}
   explosionPrefab: {fileID: 5006796346089223919, guid: eef38a6f30735bf4c84f8091c50a26e6,
     type: 3}
 --- !u!4 &767058864
@@ -853,6 +874,7 @@ GameObject:
   - component: {fileID: 778159604}
   - component: {fileID: 778159606}
   - component: {fileID: 778159605}
+  - component: {fileID: 778159607}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -8062,6 +8084,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &778159607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778159603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c13110732a57246bdcc0acea189bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &824541328
 GameObject:
   m_ObjectHideFlags: 0

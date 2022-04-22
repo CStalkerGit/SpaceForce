@@ -38,6 +38,10 @@ public class Entity : MonoBehaviour
 
     private bool isTileObject; // FIXME
 
+    // smooth movement
+    Vector3 smoothBegin;
+    Vector3 smoothEnd;
+
     protected void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -49,16 +53,21 @@ public class Entity : MonoBehaviour
         isTileObject = GetComponent<TileObject>();
     }
 
+    void LateUpdate()
+    {
+        //transform.position = Vector3.Lerp(smoothBegin, smoothEnd, Engine.alpha);
+    }
+
     protected void FixedUpdate()
     {
         // проверка на бездействие объекта (такие находятся вне экрана игрока)
         if (IsDormant)
         {
             // бездействующий объект двигается вниз одновременно вместе с картой тайлов
-            //Vector3 pos = transform.position;
-            //pos.y -= Engine.scrollingSpeed * Time.deltaTime;
-            //if (!isTileObject) transform.position = pos; // FIXME тайловые объекты сдвигаются вместе с картой
-             
+            Vector3 pos = transform.position;
+            pos.y -= Engine.scrollingSpeed * Time.deltaTime;
+            if (!isTileObject) transform.position = pos; // FIXME тайловые объекты сдвигаются вместе с картой
+
             // если объект при этом показался на экране
             if (Engine.OutOfBounds(transform.position, 1.0f) == false)
             {
@@ -85,6 +94,10 @@ public class Entity : MonoBehaviour
                 spriteRenderer.sprite = animationSprites[animationFrame];
             }
         }
+
+        // interpolation
+        //smoothBegin = smoothEnd;
+        //smoothEnd = transform.position;
     }
 
     void OnDrawGizmos()
