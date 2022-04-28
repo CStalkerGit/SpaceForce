@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyShip))]
+[RequireComponent(typeof(Enemy))]
 public class AI : MonoBehaviour
 {
     public bool patternSin;
@@ -13,11 +13,11 @@ public class AI : MonoBehaviour
     // components
     // test comment
     // test comment 2
-    public EnemyShip enemyShip { get; private set; }
+    public Enemy enemyShip { get; private set; }
 
     void Awake()
     {
-        enemyShip = GetComponent<EnemyShip>();
+        enemyShip = GetComponent<Enemy>();
     }
 
     // Update is called once per frame

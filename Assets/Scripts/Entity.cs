@@ -50,7 +50,7 @@ public class Entity : MonoBehaviour
         // устанавливаем первый кадр анимации, если она доступна
         if (animationSprites.Length > 0) spriteRenderer.sprite = animationSprites[0];
 
-        isTileObject = GetComponent<TileObject>();
+        isTileObject = GetComponent<Structure>();
     }
 
     void LateUpdate()
@@ -103,7 +103,7 @@ public class Entity : MonoBehaviour
     void OnDrawGizmos()
     {
         // отрисовка хитбокса объекта в режиме отладки
-        //Gizmos.DrawWireCube(transform.position, new Vector3(hitboxRadius * 2, hitboxRadius * 2, 0.01f));
+        Gizmos.DrawWireCube(transform.position, new Vector3(hitboxRadius * 2, hitboxRadius * 2, 0.01f));
     }
 
     public bool IsCollission(Entity entity)
@@ -119,15 +119,6 @@ public class Entity : MonoBehaviour
 
         // столкновение произошло
         return true;
-    }
-
-    /// <summary>
-    /// Получить позицию объекта для TileMap
-    /// </summary>
-    public Vector3Int GetTilePosition()
-    {
-        Vector3 pos = transform.localPosition;
-        return new Vector3Int(Mathf.RoundToInt(pos.x - 0.5f), Mathf.RoundToInt(pos.y - 0.5f), 0);
     }
 
     /// <summary>
@@ -150,11 +141,11 @@ public class Entity : MonoBehaviour
     {
         if (IsDead) return; // объект был уже уничтожен ранее
 
-        //if (byEntity) OnKillByEntity();
-
         IsDead = true;
-        Destroy(gameObject);
         UnregEntity();
+
+        Destroy(gameObject);
+        if (byEntity) OnKillByEntity(); // нужно вызывать в самом конце
     }
 
     // virtual methods

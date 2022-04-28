@@ -25,13 +25,12 @@ public class Projectile : Entity
         }
         else
         {
-            // проверка столкновения снарядов игрока с тайловыми объектами
+            // проверка столкновения снарядов игрока с врагами
             var enemy = Engine.IsEnemyCollision(this);
             if (enemy)
             {
                 // наносим урон врагу и уничтожаем снаряд
                 enemy.Damage(damage);
-                if (enemy.health < 1) Engine.CreateExplosionEffect(enemy.transform.position); // FIXME
                 Kill();
             }
         }

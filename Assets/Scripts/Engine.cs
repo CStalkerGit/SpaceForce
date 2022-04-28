@@ -6,8 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class Engine : MonoBehaviour
 {
-    public ScrollingMap map;
+    public GameMap map;
     public Effect explosionPrefab;
+    public TileBase crater;
 
     // interpolation
     public static float alpha = 0;
@@ -45,19 +46,14 @@ public class Engine : MonoBehaviour
         {
             changeSceneTime -= Time.deltaTime;
             if (changeSceneTime < 0) SceneManager.LoadScene("TitleScreen");
-        }
-        else
-        {
-            // проверка на гибель игрока
-            if (Player.IsPlayerDead()) changeScene = true;
+            return;
         }
 
+        // проверка на гибель игрока
+        if (Player.IsPlayerDead()) changeScene = true;
+
         // проверка на конец карты
-        if (map.IsMapEnd())
-        {
-            changeScene = true;
-            Debug.Log("The end of the level");
-        }
+        if (map.IsMapEnd()) changeScene = true;
     }
 
     /// <summary>
@@ -91,14 +87,11 @@ public class Engine : MonoBehaviour
             if (enemy.IsCollission(entity)) return enemy;
         }
 
-        //TerrainTile tile = instance.map.GetTile<TerrainTile>(entity.GetTilePosition());
-        //if (tile)
-        //{
-        //    // получение объекта, находящегося на тайле
-        //    Entity tileObject = GetInstantiatedObject(entity);
-        //    if (tileObject)
-        //        if (tileObject.IsCollission(entity)) return tileObject;
-        //}
+        // получение объекта, находящегося на тайле
+        Entity tileObject = instance.map.GetTileObject(entity.transform.localPosition);
+        if (tileObject)
+            if (tileObject.IsCollission(entity)) return tileObject;
+
 
         return null;
     }
@@ -130,10 +123,18 @@ public class Engine : MonoBehaviour
     }
 
     /// <summary>
-    /// Создать эффект взрыва 
+    /// Создает эффект взрыва 
     /// </summary>
     public static void CreateExplosionEffect(Vector3 position)
     {
         Instantiate(instance.explosionPrefab, position, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// Создает эффект воронки при взрыве здания на карте. При этом уничтожается gameObject, связанный с тайлом!
+    /// </summary>
+    public static void CreateСrater(Vector3 position)
+    {
+        instance.map.SetTile(instance.crater, position);
     }
 }
