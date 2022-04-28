@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         Entity entity = GetComponent<Entity>();
-        if (entity) isEnemy = entity.isEnemy; else isEnemy = false;
+        if (GetComponent<Enemy>()) isEnemy = true; else isEnemy = false;
     }
 
     void FixedUpdate()

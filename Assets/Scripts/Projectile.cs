@@ -12,6 +12,9 @@ public class Projectile : Entity
     float speed;
     Vector3 velocity;
 
+    // data
+    private bool isEnemy;
+
     new void FixedUpdate()
     {
         base.FixedUpdate();

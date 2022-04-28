@@ -8,8 +8,6 @@ public class Entity : MonoBehaviour
     // inspector data
     [Tooltip("Размер хитбокса в тайлах")]
     public float hitboxRadius = 0.5f;
-    [Tooltip("Объект является врагом или принадлежит игроку")]
-    public bool isEnemy = true;
 
     public int health = 1;
 
