@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class Entity : MonoBehaviour
 {
     // inspector data
@@ -49,11 +48,6 @@ public class Entity : MonoBehaviour
         if (animationSprites.Length > 0) spriteRenderer.sprite = animationSprites[0];
 
         isTileObject = GetComponent<Structure>();
-    }
-
-    void LateUpdate()
-    {
-        //transform.position = Vector3.Lerp(smoothBegin, smoothEnd, Engine.alpha);
     }
 
     protected void FixedUpdate()

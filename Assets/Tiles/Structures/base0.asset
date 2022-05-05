@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e4eace6fc249f3428edb65e42b4eaa2, type: 3}
-  m_Name: Scaffolding Hor
+  m_Script: {fileID: 11500000, guid: 9a103b6af5961d24baf838e4ce1e4f88, type: 3}
+  m_Name: base0
   m_EditorClassIdentifier: 
-  type: 0
-  sprite: {fileID: 21300006, guid: eea6104f29250a14c902eb8a1ec0b3bc, type: 3}
-  gameObject: {fileID: 0}
+  baseSprite: {fileID: 21300000, guid: 9ae046605ed671a4caa4dfeef45bb5b9, type: 3}
+  crater: {fileID: 11400000, guid: 138542ff9ed371a4898246b103622b3e, type: 2}

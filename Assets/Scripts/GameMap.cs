@@ -44,6 +44,12 @@ public class GameMap : MonoBehaviour
         return false;
     }
 
+    public void CreateCrater(Vector3Int coord)
+    {
+        StructureTile tile = tilemap.GetTile<StructureTile>(coord);
+        if (tile) tilemap.SetTile(coord, tile.crater);
+    }
+
     /// <summary>
     /// Получить координаты тайла в указанной позиции
     /// </summary>
@@ -53,21 +59,22 @@ public class GameMap : MonoBehaviour
         return new Vector3Int(Mathf.RoundToInt(coord.x - 0.5f), Mathf.RoundToInt(coord.y - 0.5f), 0);
     }
 
-    //
-    public void SetTile(TileBase tile, Vector3 coord)
-    {
-        tilemap.SetTile(GetPosition(coord), tile);
-    }
-
     /// <summary>
     /// Возвращает Entity, связанный cо зданием на карте
     /// </summary>
     /// <param name="coord">Координаты, где должно находится здание</param>
     /// <returns>Entity здания либо null если его нет в указанной точке</returns>
-    public Entity GetTileObject(Vector3 coord)
+    public Structure GetTileObject(Vector3 coord)
     {
         GameObject obj = tilemap.GetInstantiatedObject(GetPosition(coord));
-        if (obj) return obj.GetComponent<Entity>();
+        if (obj) return obj.GetComponent<Structure>();
+        return null;
+    }
+
+    public Structure GetTileObject(int x, int y)
+    {
+        GameObject obj = tilemap.GetInstantiatedObject(new Vector3Int(x, y, 0));
+        if (obj) return obj.GetComponent<Structure>();
         return null;
     }
 }

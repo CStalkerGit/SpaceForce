@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e4eace6fc249f3428edb65e42b4eaa2, type: 3}
-  m_Name: Building1
+  m_Name: CraterS
   m_EditorClassIdentifier: 
-  baseSprite: {fileID: 21300000, guid: 5a11e6e97e406d14fb24c83a7426e9af, type: 3}
+  baseSprite: {fileID: 21300000, guid: 28e414f857a6f4842a805a9ba8818809, type: 3}
   sprites: []
-  gameObject: {fileID: 6275711324236333527, guid: 045f33547c2abf049ad7115af1b89517,
-    type: 3}

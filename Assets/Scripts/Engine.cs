@@ -8,16 +8,16 @@ public class Engine : MonoBehaviour
 {
     public GameMap map;
     public Effect explosionPrefab;
-    public TileBase crater;
+    public Structure structurePrefab;
 
     // interpolation
     public static float alpha = 0;
 
     public const float GameAspect = 0.6f;
-    public const float scrollingSpeed = 2.5f;
+    public const float scrollingSpeed = 1.0f;
     public const float PPU = 16; // pixels per unit
 
-    private static Engine instance;
+    public static Engine Instance { get; private set; }
     public static List<Entity> enemies = new List<Entity>();
     public static List<Entity> bonuses = new List<Entity>();
 
@@ -28,7 +28,7 @@ public class Engine : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
 
         enemies.Clear();
         bonuses.Clear();
@@ -63,7 +63,7 @@ public class Engine : MonoBehaviour
     /// <param name="offset">дополнительное смещение от краев экрана</param>
     public static bool OutOfBounds(Vector3 position, float offset)
     {
-        return instance.map.OutOfBounds(position, offset);
+        return Instance.map.OutOfBounds(position, offset);
     }
 
     /// <summary>
@@ -88,9 +88,9 @@ public class Engine : MonoBehaviour
         }
 
         // получение объекта, находящегося на тайле
-        Entity tileObject = instance.map.GetTileObject(entity.transform.localPosition);
-        if (tileObject)
-            if (tileObject.IsCollission(entity)) return tileObject;
+        Structure structure = Instance.map.GetTileObject(entity.transform.localPosition);
+        if (structure)
+            if (structure.IsCollission(entity)) return structure;
 
 
         return null;
@@ -127,14 +127,32 @@ public class Engine : MonoBehaviour
     /// </summary>
     public static void CreateExplosionEffect(Vector3 position)
     {
-        Instantiate(instance.explosionPrefab, position, Quaternion.identity);
+        Instantiate(Instance.explosionPrefab, position, Quaternion.identity);
     }
 
     /// <summary>
     /// Создает эффект воронки при взрыве здания на карте. При этом уничтожается gameObject, связанный с тайлом!
     /// </summary>
-    public static void CreateСrater(Vector3 position)
+    public static void CreateСrater(Vector3Int coord)
     {
-        instance.map.SetTile(instance.crater, position);
+        Instance.map.CreateCrater(coord);
+    }
+
+    /// <summary>
+    /// Включить таймер для самоуничтожения соседних тайлов
+    /// </summary>
+    public static void DestroyNeighbors(Vector3Int position)
+    {
+        for (int x = position.x - 1; x <= position.x + 1; x += 2)
+        {
+            Structure structure = Instance.map.GetTileObject(x, position.y);
+            if (structure) structure.SelfDestruct();
+        }
+
+        for (int y = position.y - 1; y <= position.y + 1; y += 2)
+        {
+            Structure structure = Instance.map.GetTileObject(position.x, y);
+            if (structure) structure.SelfDestruct();
+        }
     }
 }

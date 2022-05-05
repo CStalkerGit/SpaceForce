@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e4eace6fc249f3428edb65e42b4eaa2, type: 3}
-  m_Name: Terrain6
+  m_Name: BigCrater0
   m_EditorClassIdentifier: 
-  type: 0
-  sprite: {fileID: 21300014, guid: eea6104f29250a14c902eb8a1ec0b3bc, type: 3}
-  gameObject: {fileID: 0}
+  baseSprite: {fileID: 21300000, guid: ebccbb8f6d82a3341a4dc679df403cde, type: 3}
+  sprites: []
