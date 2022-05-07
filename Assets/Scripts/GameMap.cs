@@ -28,13 +28,19 @@ public class GameMap : MonoBehaviour
     /// </summary>
     /// <param name="position">текущая позиция объекта</param>
     /// <param name="offset">дополнительное смещение от краев экрана</param>
-    public bool OutOfBounds(Vector3 position, float offset)
+    public bool OutOfBounds(Vector3 position, bool upperBorder)
     {
+        const float offset = 1.5f;
         float height = 2f * Camera.main.orthographicSize;
-        float width = height * Camera.main.aspect;
+        float width = Engine.widthInTiles; //height * Camera.main.aspect;
 
-        if (position.x < -width / 2 - offset || position.x > width / 2 + offset) return true;
-        if (position.y < -height / 2 - offset || position.y > height / 2 + offset) return true;
+        // выход за левую или правую границу экрана
+        if (position.x < (-width / 2 - offset) || position.x > (width / 2 + offset)) return true;
+        // выход за нижнюю границу экрана
+        if (position.y < (-height / 2 - offset)) return true;
+        // выход за верхнюю границу экрана, если нужно проверить
+        if (upperBorder && (position.y > (height / 2 + offset))) return true;
+
         return false;
     }
 

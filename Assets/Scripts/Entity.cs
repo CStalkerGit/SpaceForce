@@ -22,10 +22,6 @@ public class Entity : MonoBehaviour
     public float PosX { get => transform.position.x; }
     public float PosY { get => transform.position.y; }
 
-    /// <summary>
-    /// Объект бездействует, пока не появится на экране
-    /// </summary>
-    public bool IsDormant { get; private set; }
     public bool IsDead { get; private set; } // объект был уничтожен
 
     // sprite animation
@@ -42,7 +38,6 @@ public class Entity : MonoBehaviour
     protected void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        IsDormant = true;
 
         // устанавливаем первый кадр анимации, если она доступна
         if (animationSprites.Length > 0) spriteRenderer.sprite = animationSprites[0];
@@ -50,27 +45,14 @@ public class Entity : MonoBehaviour
         isTileObject = GetComponent<Structure>();
     }
 
+    private void Start()
+    {
+        RegEntity();
+    }
+
     protected void FixedUpdate()
     {
-        // проверка на бездействие объекта (такие находятся вне экрана игрока)
-        if (IsDormant)
-        {
-            // бездействующий объект двигается вниз одновременно вместе с картой тайлов
-            Vector3 pos = transform.position;
-            pos.y -= Engine.scrollingSpeed * Time.deltaTime;
-            if (!isTileObject) transform.position = pos; // FIXME тайловые объекты сдвигаются вместе с картой
-
-            // если объект при этом показался на экране
-            if (Engine.OutOfBounds(transform.position, 1.0f) == false)
-            {
-                RegEntity(); // зарегистрировать, чтобы включить взаимодействие игрока с этим объектом
-                IsDormant = false; // объект больше не бездействует 
-            }
-        }
-        else
-        {
-            if (Engine.OutOfBounds(transform.position, 1.0f)) OnOutOfBounds();
-        }
+        if (Engine.OutOfBounds(transform.position, false)) Kill();
 
         // покадровая анимация спрайта, если доступна (есть 2 спрайта или больше)
         if (animationSprites.Length > 1)
@@ -101,7 +83,8 @@ public class Entity : MonoBehaviour
     public bool IsCollission(Entity entity)
     {
         // проверка, не находится ли объект вне экрана
-        if (IsDormant) return false;
+        if (Engine.OutOfBounds(transform.position, true)) return false;
+
         // проверка, не был ли объект уже уничтожен
         if (IsDead) return false;
 
@@ -161,13 +144,5 @@ public class Entity : MonoBehaviour
     protected virtual void OnKillByEntity()
     { 
 
-    }
-
-    /// <summary>
-    /// Функция вызывается при выходе объекта с экрана
-    /// </summary>
-    protected virtual void OnOutOfBounds()
-    {
-        Kill();
     }
 }

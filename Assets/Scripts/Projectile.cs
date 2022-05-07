@@ -39,7 +39,7 @@ public class Projectile : Entity
         }
 
         // проверка выхода за границу экрана
-        if (Engine.OutOfBounds(transform.localPosition, 2.0f)) Kill();
+        if (Engine.OutOfBounds(transform.localPosition, true)) Kill();
     }
 
     /// <summary>

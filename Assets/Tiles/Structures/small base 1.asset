@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSprite: {fileID: 21300000, guid: 5a11e6e97e406d14fb24c83a7426e9af, type: 3}
   crater: {fileID: 11400000, guid: 4aac4f52b8fd2624bb92162f0bb29817, type: 2}
+  structurePrefab: {fileID: 6033997566688589176, guid: c13861504b692f540b6c659b484ef7f1,
+    type: 3}

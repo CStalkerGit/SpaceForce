@@ -5,26 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class AI : MonoBehaviour
 {
-    public bool patternSin;
+    public AIPattern pattern;
     public float speed = 3;
+
+    private static readonly float SinWidth = 5;
 
     private float sinusoid;
 
-    // components
-    // test comment
-    // test comment 2
     public Enemy enemyShip { get; private set; }
 
     void Awake()
     {
         enemyShip = GetComponent<Enemy>();
+        if (pattern == AIPattern.Sinusoid) sinusoid = Mathf.Sin(transform.position.x / SinWidth);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (enemyShip.IsDormant) return;
-
         // для паттерна синусоиды
         sinusoid += Time.deltaTime;
         if (sinusoid > Mathf.PI) sinusoid -= Mathf.PI * 2;
@@ -32,13 +30,8 @@ public class AI : MonoBehaviour
         Vector3 pos = transform.position;
 
         pos.y -= speed * Time.deltaTime;
-        if (patternSin) pos.x = Mathf.Sin(sinusoid) * 5;
+        if (pattern == AIPattern.Sinusoid) pos.x = Mathf.Sin(sinusoid) * SinWidth;
 
         transform.position = pos;
-    }
-
-    void TestFunction()
-    {
-
     }
 }

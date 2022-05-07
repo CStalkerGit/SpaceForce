@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FireDirection
+public enum FireMode
 {
     Random,
+    ToDirection,
     NearestEnemy,
-    Up,
-    Down,
     Spread
 }
 
@@ -20,8 +19,10 @@ public class Weapon : MonoBehaviour
     public bool automaticFire;
 
     [Header("Fire settings")]
-    [Tooltip("Направление вылета снарядов")]
-    public FireDirection fireDirection;
+    [Tooltip("Режим стрельбы")]
+    public FireMode fireMode;
+    [Tooltip("Направление выстрела для режима стрельбы ToDirection")]
+    public Vector3 toDirection;
     [Tooltip("Смещение точки выстрела от центра стреляющего")]
     public Vector2 projStartPoint;
 
@@ -37,6 +38,7 @@ public class Weapon : MonoBehaviour
     {
         Entity entity = GetComponent<Entity>();
         if (GetComponent<Enemy>()) isEnemy = true; else isEnemy = false;
+        if (automaticFire) shootDelay = Random.Range(0, firerate); // для случайного времени начала стрельбы
     }
 
     void FixedUpdate()
@@ -56,9 +58,9 @@ public class Weapon : MonoBehaviour
         projectile.transform.position = transform.position + (Vector3)projStartPoint;
         projectile.Init(projSpeed, isEnemy);
 
-        switch (fireDirection)
+        switch (fireMode)
         {
-            case FireDirection.Random:
+            case FireMode.Random:
                 {
                     float angle = Random.Range(-Mathf.PI, Mathf.PI);
                     Vector3 randomDirection = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
@@ -66,25 +68,19 @@ public class Weapon : MonoBehaviour
                     break;
                 }
 
-            case FireDirection.NearestEnemy:
+            case FireMode.ToDirection:
+                {
+                    projectile.SetDirection(toDirection);
+                    break;
+                }
+
+            case FireMode.NearestEnemy:
                 {
                     if (isEnemy) projectile.SetDestination(Player.position);
                     break;
                 }
 
-            case FireDirection.Up:
-                {
-                    projectile.SetDirection(new Vector3(0, 1, 0));
-                    break;
-                }
-
-            case FireDirection.Down:
-                {
-                    projectile.SetDirection(new Vector3(0, -1, 0));
-                    break;
-                }
-
-            case FireDirection.Spread:
+            case FireMode.Spread:
                 {
                     projectile.SetDirection(new Vector3(0, 1, 0));
 

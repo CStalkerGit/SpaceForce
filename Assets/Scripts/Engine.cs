@@ -7,8 +7,7 @@ using UnityEngine.Tilemaps;
 public class Engine : MonoBehaviour
 {
     public GameMap map;
-    public Effect explosionPrefab;
-    public Structure structurePrefab;
+    public Effect explosionPrefab; 
 
     // interpolation
     public static float alpha = 0;
@@ -16,6 +15,8 @@ public class Engine : MonoBehaviour
     public const float GameAspect = 0.6f;
     public const float scrollingSpeed = 1.0f;
     public const float PPU = 16; // pixels per unit
+    public const int widthInTiles = 12;
+    public const int heightInTiles = 20;
 
     public static Engine Instance { get; private set; }
     public static List<Entity> enemies = new List<Entity>();
@@ -24,7 +25,6 @@ public class Engine : MonoBehaviour
     // для смены сцены в случае победы или поражения
     private bool changeScene = false;
     private float changeSceneTime = 2.5f;
-
 
     private void Awake()
     {
@@ -60,21 +60,10 @@ public class Engine : MonoBehaviour
     /// Проверка, не вышел ли объект за границы экрана
     /// </summary>
     /// <param name="position">текущая позиция объекта</param>
-    /// <param name="offset">дополнительное смещение от краев экрана</param>
-    public static bool OutOfBounds(Vector3 position, float offset)
+    /// <param name="upperBorder">нужно ли учитывать верхнюю границу экрана</param>
+    public static bool OutOfBounds(Vector3 position, bool upperBorder)
     {
-        return Instance.map.OutOfBounds(position, offset);
-    }
-
-    /// <summary>
-    /// Проверка, не вышел ли объект за нижнюю границу экрана
-    /// </summary>
-    /// <param name="position">текущая позиция объекта</param>
-    /// <param name="offset">смещение от нижнего края экрана</param>
-    public static bool OutOfBoundsBottom(Vector3 position, float offset)
-    {
-        if (position.y < 0 - offset) return true;
-        return false;
+        return Instance.map.OutOfBounds(position, upperBorder);
     }
 
     /// <summary>
@@ -114,11 +103,6 @@ public class Engine : MonoBehaviour
     /// </summary>
     public static Entity GetNearestEnemy(Entity entity)
     {
-        foreach (var bonus in bonuses)
-        {
-            if (bonus.IsCollission(entity)) return (Bonus)bonus;
-        }
-
         return null;
     }
 

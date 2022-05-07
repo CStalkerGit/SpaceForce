@@ -9,7 +9,7 @@ public class StructureTile : TileBase
 {
     public Sprite baseSprite;
     public TileBase crater;
-    //public GameObject gameObject;
+    public GameObject structurePrefab;
 
     public override bool StartUp(Vector3Int location, ITilemap tilemap, GameObject go)
     {
@@ -25,7 +25,7 @@ public class StructureTile : TileBase
     public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
     {
         tileData.sprite = baseSprite;
-        tileData.gameObject = Engine.Instance.structurePrefab.gameObject;
+        tileData.gameObject = structurePrefab;
         tileData.color = Color.white;
     }
 }

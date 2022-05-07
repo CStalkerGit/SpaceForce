@@ -17,12 +17,9 @@ public class Bonus : Entity
         base.FixedUpdate();
 
         // бонусы медленно опускаются вниз по карте 
-        if (!IsDormant)
-        {
-            Vector3 pos = transform.position;
-            pos.y -= speed * Time.deltaTime;
-            transform.position = pos;
-        }
+        Vector3 pos = transform.position;
+        pos.y -= speed * Time.deltaTime;
+        transform.position = pos;
     }
 
     public void Apply()

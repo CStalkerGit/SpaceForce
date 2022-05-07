@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    [Tooltip("Паттерн спавна этого вида врага на экране")]
+    public WavePattern wavePattern;
+
     new void FixedUpdate()
     {
         base.FixedUpdate();
@@ -23,5 +26,10 @@ public class Enemy : Entity
     protected override void UnregEntity()
     {
         Engine.enemies.Remove(this);
+    }
+
+    protected override void OnKillByEntity()
+    {
+        Engine.CreateExplosionEffect(transform.position);
     }
 }

@@ -165,9 +165,4 @@ public class Player : Entity
         if (!instance) return true;
         return instance.IsDead;
     }
-
-    protected override void OnOutOfBounds()
-    {
-
-    }
 }
