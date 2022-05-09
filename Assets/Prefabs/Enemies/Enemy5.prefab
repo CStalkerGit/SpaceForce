@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8940478743725834118}
   - component: {fileID: 114625508717989626}
   - component: {fileID: 114440674774449360}
+  - component: {fileID: 114727719340303308}
   m_Layer: 0
-  m_Name: Enemy3
+  m_Name: Enemy5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 446470249
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: de41f5536e10dc741a453751b496a4f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7c11a27a6991bdd4b82031ae0e02cfe1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -94,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitboxRadius: 0.5
-  health: 4
+  health: 3
   animationSprites: []
   animationSpeed: 0.25
   wavePattern: 0
@@ -112,3 +113,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pattern: 1
   speed: 3.5
+--- !u!114 &114727719340303308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495348712090846252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f309f96d08c524abfe904aa3fb66d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firerate: 8
+  automaticFire: 1
+  fireMode: 1
+  toDirection: {x: 0, y: -1, z: 0}
+  projStartPoint: {x: 0, y: -0.25}
+  projPrefab: {fileID: 8317650357689115552, guid: 336348dfdd1b3174d8e9b09db3c72b03,
+    type: 3}
+  projSpeed: 8

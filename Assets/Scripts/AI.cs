@@ -24,7 +24,7 @@ public class AI : MonoBehaviour
     void FixedUpdate()
     {
         // для паттерна синусоиды
-        sinusoid += Time.deltaTime;
+        sinusoid += Time.deltaTime * 2;
         if (sinusoid > Mathf.PI) sinusoid -= Mathf.PI * 2;
 
         Vector3 pos = transform.position;
