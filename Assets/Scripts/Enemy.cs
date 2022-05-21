@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    [Tooltip("Паттерн спавна этого вида врага на экране")]
-    public WavePattern wavePattern;
-
     new void FixedUpdate()
     {
         base.FixedUpdate();

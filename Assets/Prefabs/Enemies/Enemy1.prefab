@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8384653756421055847}
   - component: {fileID: 8940478743725834118}
   - component: {fileID: 114625508717989626}
-  - component: {fileID: 114987959807686934}
   - component: {fileID: 114440674774449360}
   m_Layer: 0
   m_Name: Enemy1
@@ -73,7 +72,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7022b3ec2339c794a87dd32da761c349, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -99,25 +98,6 @@ MonoBehaviour:
   animationSprites: []
   animationSpeed: 0.25
   wavePattern: 0
---- !u!114 &114987959807686934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1495348712090846252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86f309f96d08c524abfe904aa3fb66d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firerate: 1
-  automaticFire: 0
-  fireDirection: 3
-  projStartPoint: {x: 0, y: 0}
-  projPrefab: {fileID: 8317650357689115552, guid: 336348dfdd1b3174d8e9b09db3c72b03,
-    type: 3}
-  projSpeed: 5
 --- !u!114 &114440674774449360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,5 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec01b37aa4d9e44f96cec379f365cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pattern: 0
-  speed: 1.5
+  pattern: 2
+  vertSpeed: 3
+  horSpeed: 4

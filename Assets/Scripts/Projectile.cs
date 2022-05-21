@@ -9,10 +9,8 @@ public class Projectile : Entity
     public int damage = 1;
 
     // physics
-    float speed;
-    Vector3 velocity;
-
-    // data
+    private float speed;
+    private Vector3 velocity;
     private bool isEnemy;
 
     new void FixedUpdate()

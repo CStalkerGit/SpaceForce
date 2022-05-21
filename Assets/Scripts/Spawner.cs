@@ -38,12 +38,7 @@ public class Spawner : MonoBehaviour
         spawnDelay = spawnDelayTime;
         var enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
-        switch(enemy.wavePattern)
-        {
-            case WavePattern.Random:
-                RandomPattern(enemy);
-                break;
-        }
+        RandomPattern(enemy);
     }
 
     void RandomPattern(Enemy enemy)
@@ -52,7 +47,7 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            var position = new Vector3(Random.Range(-spawnBorderX, spawnBorderX), spawnBorderY + i / 2.0f, 0);
+            var position = new Vector3(Random.Range(-spawnBorderX, spawnBorderX), spawnBorderY + i, 0);
             Instantiate(enemy, position, Quaternion.identity);
         }
     }

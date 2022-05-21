@@ -26,10 +26,13 @@ public class Engine : MonoBehaviour
     private bool changeScene = false;
     private float changeSceneTime = 2.5f;
 
-    private void Awake()
+    Engine()
     {
         Instance = this;
+    }
 
+    private void Awake()
+    {
         enemies.Clear();
         bonuses.Clear();
     }

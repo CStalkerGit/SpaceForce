@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    // inspector data
+    // entity data
+    [Header("Data")]
     [Tooltip("Размер хитбокса в тайлах")]
     public float hitboxRadius = 0.5f;
-
     public int health = 1;
 
     [Header("Sprite Animation")]
@@ -19,9 +19,9 @@ public class Entity : MonoBehaviour
     // components
     public SpriteRenderer spriteRenderer { get; private set; }
 
+    // properties 
     public float PosX { get => transform.position.x; }
     public float PosY { get => transform.position.y; }
-
     public bool IsDead { get; private set; } // объект был уничтожен
 
     // sprite animation

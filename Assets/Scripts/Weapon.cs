@@ -54,9 +54,7 @@ public class Weapon : MonoBehaviour
 
         shootDelay = firerate;
 
-        Projectile projectile = Instantiate(projPrefab);
-        projectile.transform.position = transform.position + (Vector3)projStartPoint;
-        projectile.Init(projSpeed, isEnemy);
+        Projectile projectile = NewProjectile();
 
         switch (fireMode)
         {
@@ -86,10 +84,9 @@ public class Weapon : MonoBehaviour
 
                     for (float f = -Mathf.PI; f < Mathf.PI; f += Mathf.PI / 4)
                     {
-                        projectile = Instantiate(projPrefab);
-                        projectile.transform.position = transform.position + (Vector3)projStartPoint;
-                        projectile.Init(projSpeed, isEnemy);
-                        projectile.SetDirection(new Vector3(Mathf.Cos(f), Mathf.Sin(f), 0));
+                        Projectile projectile2 = NewProjectile();
+                        projectile2.Init(projSpeed, isEnemy);
+                        projectile2.SetDirection(new Vector3(Mathf.Cos(f), Mathf.Sin(f), 0));
                     }
 
                     break;
@@ -97,6 +94,14 @@ public class Weapon : MonoBehaviour
 
             default: throw new System.Exception("fireDirection is unknown");
         }
+    }
+
+    public Projectile NewProjectile()
+    {
+        Projectile projectile = Instantiate(projPrefab);
+        projectile.transform.position = transform.position + (Vector3)projStartPoint;
+        projectile.Init(projSpeed, isEnemy);
+        return projectile;
     }
 
 }
