@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5714097647620709164}
   - component: {fileID: 5714097647620709165}
+  - component: {fileID: 114933609503520480}
   - component: {fileID: 5714097647620709167}
   m_Layer: 0
-  m_Name: HealthBonus
+  m_Name: Health bonus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,20 +67,38 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1370511811
+  m_SortingLayer: 3
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 0ef2efe0e9b78c54b8be80e18de4b54e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f3ea2d62bfc7f24d8145e635261695a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &114933609503520480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5714097647620709152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9969634346a8f374ba25e92f4744b744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 8f3ea2d62bfc7f24d8145e635261695a, type: 3}
+  - {fileID: 21300002, guid: 8f3ea2d62bfc7f24d8145e635261695a, type: 3}
+  speed: 0.2
+  loop: 1
+  autoPlay: 1
 --- !u!114 &5714097647620709167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,7 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitboxRadius: 0.5
-  isEnemy: 0
   health: 1
   restoreHealth: 1
-  upgradeWeapon: 0
+  upgradePrefab: {fileID: 0}

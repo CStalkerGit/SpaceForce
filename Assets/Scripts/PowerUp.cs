@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bonus : Entity
+public class PowerUp : Entity
 {
-    [Header("Bonus Effects")]
-    [Tooltip("Восстанавливает утраченное здоровье, не превышая максимум")]
+    [Header("PowerUp Effects")]
+    [Tooltip("Восстанавливает утраченное здоровье, не превышая максимум.")]
     public int restoreHealth;
-    [Tooltip("Улучшает вооружение игрока")]
-    public bool upgradeWeapon;
+    [Tooltip("Улучшает вооружение игрока. Null, если это не нужно.")]
+    public Upgrade upgradePrefab;
 
     const float speed = 1.5f;
 
@@ -16,9 +16,9 @@ public class Bonus : Entity
     {
         base.FixedUpdate();
 
-        // бонусы медленно опускаются вниз по карте 
+        // поверапы медленно опускаются вниз по карте 
         Vector3 pos = transform.position;
-        pos.y -= speed * Time.deltaTime;
+        pos.y -= speed * Time.deltaTime * speed;
         transform.position = pos;
     }
 
@@ -27,7 +27,7 @@ public class Bonus : Entity
         if (IsDead) return;
 
         if (restoreHealth > 0) Player.RestoreHealth(restoreHealth);
-        if (upgradeWeapon) Player.UpgradeWeapon();
+        if (upgradePrefab) Player.AddWeapon(upgradePrefab);
     }
 
     // override methods

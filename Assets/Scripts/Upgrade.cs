@@ -13,6 +13,8 @@ public enum Orientation
 public class Upgrade : MonoBehaviour
 {
     public Orientation orientation;
+    [Tooltip("Смещение положения поверапа относительно центра игрока")]
+    public Vector2 offset;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +28,28 @@ public class Upgrade : MonoBehaviour
         
     }
 
-    public static bool TestCompatibibly()
+    public static void AddToParent(Transform parent, Upgrade upgradePrefab)
     {
-        return false;
+        Upgrade sideUpgrade = null;
+
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            var child = parent.GetChild(i).GetComponent<Upgrade>();
+            if (!child) continue;
+            if (child.orientation == upgradePrefab.orientation)
+            {
+                if (child.orientation == Orientation.Side)
+                {
+                    // если слева уже стоит поверап, снимаем поверап справа
+                    if (sideUpgrade) Destroy(child.gameObject); else sideUpgrade = child;
+                    continue;
+                }
+            }
+        }
+        var upgrade = Instantiate(upgradePrefab, parent);
+
+        Vector3 position = upgradePrefab.offset;
+        if (sideUpgrade) position.x = -position.x; // flip side
+        upgrade.transform.localPosition = position;
     }
 }

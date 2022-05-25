@@ -8,22 +8,16 @@ public class Player : Entity
     public const int maxHealth = 5;
     public const float invulnTime = 2.0f; // время неуязвимости после столкновения с врагом
 
-    // TODO заменить на специальный класс
-    public Weapon[] weapons2;
-    public Weapon[] weapons3;
-
     public static Vector3 position { get; private set; }
 
     private static Player instance;
     private static float invulnerabilityTime = -1; // временная неуязвимость после столкновения с врагом
     private SpriteRenderer sprShield; // спрайт защитного поля для эффекта неуязвимости
-    private static int weaponLevel; // уровень прокачки оружия
 
     private void Start()
     {
         instance = this;
         sprShield = transform.Find("Shield").GetComponent<SpriteRenderer>();
-        weaponLevel = 1;
 
         HUD.UpdateHealthBar(health);
     }
@@ -88,7 +82,7 @@ public class Player : Entity
         }
 
         // проверка на находящиеся поблизости бонусы, которые может подобрать игрок
-        Bonus bonus = Engine.IsBonusCollision(this);
+        PowerUp bonus = Engine.IsBonusCollision(this);
         if (bonus)
         {
             bonus.Apply(); // применить бонус на игроке
@@ -133,22 +127,11 @@ public class Player : Entity
         HUD.UpdateHealthBar(instance.health);
     }
 
-    // TODO переписать на нормлаьный код
-    public static void UpgradeWeapon()
+    public static void AddWeapon(Upgrade upgradePrefab)
     {
         if (!instance) return;
 
-        weaponLevel++;
-
-        switch (weaponLevel)
-        {
-            case 2:
-                EnableWeapon(instance.weapons2);
-                break;
-            case 3:
-                EnableWeapon(instance.weapons3);
-                break;
-        }
+        Upgrade.AddToParent(instance.transform, upgradePrefab);
     }
 
     public static void EnableWeapon(Weapon[] weapons)

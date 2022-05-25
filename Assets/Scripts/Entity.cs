@@ -4,30 +4,16 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    // entity data
+    // data
     [Header("Data")]
     [Tooltip("Размер хитбокса в тайлах")]
     public float hitboxRadius = 0.5f;
     public int health = 1;
 
-    [Header("Sprite Animation")]
-    [Tooltip("Массив спрайтов, если нужна покадровая анимация")]
-    public Sprite[] animationSprites;
-    [Tooltip("Скорость смены кадров анимации, в секундах")]
-    public float animationSpeed = 0.25f;
-
-    // components
-    public SpriteRenderer spriteRenderer { get; private set; }
-
     // properties 
     public float PosX { get => transform.position.x; }
     public float PosY { get => transform.position.y; }
     public bool IsDead { get; private set; } // объект был уничтожен
-
-    // sprite animation
-    // TODO перенести анимацию в отдельный класс
-    private float animationTime;
-    private int animationFrame; // текущий кадр анимации
 
     private bool isTileObject; // FIXME
 
@@ -37,11 +23,6 @@ public class Entity : MonoBehaviour
 
     protected void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // устанавливаем первый кадр анимации, если она доступна
-        if (animationSprites.Length > 0) spriteRenderer.sprite = animationSprites[0];
-
         isTileObject = GetComponent<Structure>();
     }
 
@@ -53,21 +34,6 @@ public class Entity : MonoBehaviour
     protected void FixedUpdate()
     {
         if (Engine.OutOfBounds(transform.position, false)) Kill();
-
-        // покадровая анимация спрайта, если доступна (есть 2 спрайта или больше)
-        if (animationSprites.Length > 1)
-        {
-            animationTime += Time.deltaTime;
-
-            // смена кадра анимации
-            if (animationTime >= animationSpeed)
-            {
-                animationTime = 0;
-                animationFrame++;
-                if (animationFrame >= animationSprites.Length) animationFrame = 0;
-                spriteRenderer.sprite = animationSprites[animationFrame];
-            }
-        }
 
         // interpolation
         //smoothBegin = smoothEnd;

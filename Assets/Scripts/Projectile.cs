@@ -7,6 +7,7 @@ public class Projectile : Entity
 {
     [Header("Projectile")]
     public int damage = 1;
+    public bool continuousDamage;
 
     // physics
     private float speed;
@@ -32,7 +33,7 @@ public class Projectile : Entity
             {
                 // наносим урон врагу и уничтожаем снаряд
                 enemy.Damage(damage);
-                Kill();
+                if (!continuousDamage) Kill();
             }
         }
 

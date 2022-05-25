@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// класс для спавна врагов и бонусов
+// компонент для спавна врагов и поверапов
 public class Spawner : MonoBehaviour
 {
     [Tooltip("Массив префабов врагов, которых можно спавнить")]
     public Enemy[] enemyPrefabs;
 
     private int waveCount;
+    private int maxWaves = 0;
     private float spawnDelay = spawnDelayTime;
 
     // время в миллисекундах до спавна следующей волны
@@ -27,7 +28,7 @@ public class Spawner : MonoBehaviour
             // отсрочка спавна
             spawnDelay -= Time.deltaTime;
 
-            if (spawnDelay <= 0 && waveCount < 3) NextWave();
+            if (spawnDelay <= 0 && waveCount < maxWaves) NextWave();
         }
     }
 

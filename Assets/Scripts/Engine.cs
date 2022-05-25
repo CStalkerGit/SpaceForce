@@ -13,7 +13,7 @@ public class Engine : MonoBehaviour
     public static float alpha = 0;
 
     public const float GameAspect = 0.6f;
-    public const float scrollingSpeed = 1.0f;
+    public const float scrollingSpeed = 3.0f;
     public const float PPU = 16; // pixels per unit
     public const int widthInTiles = 12;
     public const int heightInTiles = 20;
@@ -91,11 +91,11 @@ public class Engine : MonoBehaviour
     /// <summary>
     /// Проверка взаимодействия игрока с бонусом
     /// </summary>
-    public static Bonus IsBonusCollision(Entity entity)
+    public static PowerUp IsBonusCollision(Entity entity)
     {
         foreach (var bonus in bonuses)
         {
-            if (bonus.IsCollission(entity)) return (Bonus)bonus;
+            if (bonus.IsCollission(entity)) return (PowerUp)bonus;
         }
 
         return null;

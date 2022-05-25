@@ -47,8 +47,14 @@ TagManager:
   - name: enemies
     uniqueID: 446470249
     locked: 0
+  - name: powerups
+    uniqueID: 2924455485
+    locked: 0
   - name: player
     uniqueID: 2160416787
+    locked: 0
+  - name: upgrades
+    uniqueID: 1854185891
     locked: 0
   - name: foreground
     uniqueID: 827406273
