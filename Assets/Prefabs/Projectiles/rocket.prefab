@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3083226639907135048}
   - component: {fileID: 7206606848753129742}
-  - component: {fileID: 114830579580779328}
+  - component: {fileID: 114882463532236904}
   - component: {fileID: 4894300317469149150}
   m_Layer: 0
-  m_Name: Large beam
+  m_Name: rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: -2134550509
   m_SortingLayer: 4
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300008, guid: a730ebd98e746ea44b1a3258fe8baefc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c3c424f1b5744a4e8cde47bb8957ffd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &114830579580779328
+--- !u!114 &114882463532236904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,13 +94,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: a730ebd98e746ea44b1a3258fe8baefc, type: 3}
-  - {fileID: 21300002, guid: a730ebd98e746ea44b1a3258fe8baefc, type: 3}
-  - {fileID: 21300004, guid: a730ebd98e746ea44b1a3258fe8baefc, type: 3}
-  - {fileID: 21300006, guid: a730ebd98e746ea44b1a3258fe8baefc, type: 3}
-  - {fileID: 21300008, guid: a730ebd98e746ea44b1a3258fe8baefc, type: 3}
-  speed: 0.035
-  loop: 0
+  - {fileID: 21300000, guid: 0c3c424f1b5744a4e8cde47bb8957ffd, type: 3}
+  - {fileID: 21300002, guid: 0c3c424f1b5744a4e8cde47bb8957ffd, type: 3}
+  - {fileID: 21300004, guid: 0c3c424f1b5744a4e8cde47bb8957ffd, type: 3}
+  - {fileID: 21300006, guid: 0c3c424f1b5744a4e8cde47bb8957ffd, type: 3}
+  speed: 0.2
+  loop: 1
   autoPlay: 1
 --- !u!114 &4894300317469149150
 MonoBehaviour:
@@ -114,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e070028a26320942b0da61296ae29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.8
+  hitboxRadius: 0.4
   health: 1
-  damage: 3
-  continuousDamage: 1
+  damage: 10
+  continuousDamage: 0

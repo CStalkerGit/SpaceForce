@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour
     public Enemy[] enemyPrefabs;
 
     private int waveCount;
-    private int maxWaves = 0;
+    private int maxWaves = 1;
     private float spawnDelay = spawnDelayTime;
 
     // время в миллисекундах до спавна следующей волны

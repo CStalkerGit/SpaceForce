@@ -3,6 +3,7 @@ guid: 7442d9ecab980ad47bb93a3a6da6150c
 TextureImporter:
   fileIDToRecycleName:
     21300000: weapons_0
+    21300002: weapons_1
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -88,7 +89,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cbea7a77477c12439be89fdf82e9f6e
+      spriteID: 169cd5b9330e45248b31fc238b845687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: weapons_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7086d796c786be40be2624c27132adf
       vertices: []
       indices: 
       edges: []

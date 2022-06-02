@@ -13,8 +13,8 @@ public enum Orientation
 public class Upgrade : MonoBehaviour
 {
     public Orientation orientation;
-    [Tooltip("Смещение положения поверапа относительно центра игрока")]
-    public Vector2 offset;
+    [Tooltip("Смещение положения поверапа относительно центра игрока, в пикселях")]
+    public Vector2Int offset;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,10 @@ public class Upgrade : MonoBehaviour
         }
         var upgrade = Instantiate(upgradePrefab, parent);
 
-        Vector3 position = upgradePrefab.offset;
+        Vector3 position = new Vector3(
+            upgradePrefab.offset.x / Engine.PPU,
+            upgradePrefab.offset.y / Engine.PPU,
+            0);
         if (sideUpgrade) position.x = -position.x; // flip side
         upgrade.transform.localPosition = position;
     }
