@@ -8,6 +8,8 @@ public class Projectile : Entity
     [Header("Projectile")]
     public int damage = 1;
     public bool continuousDamage;
+    [Tooltip("Скорость полета снаряда, тайлы/секунда")]
+    public float projSpeed = 4.0f;
 
     // physics
     private float speed;

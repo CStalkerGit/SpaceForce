@@ -28,8 +28,6 @@ public class Weapon : MonoBehaviour
 
     [Header("Projectile")]
     public Projectile projPrefab;
-    [Tooltip("Скорость полета снаряда, тайлы/секунда")]
-    public float projSpeed = 4.0f; 
 
     float shootDelay;
     bool isEnemy; // принадлежит ли оружие (и выпускаемые им снаряды) врагу
@@ -85,7 +83,7 @@ public class Weapon : MonoBehaviour
                     for (float f = -Mathf.PI; f < Mathf.PI; f += Mathf.PI / 4)
                     {
                         Projectile projectile2 = NewProjectile();
-                        projectile2.Init(projSpeed, isEnemy);
+                        projectile2.Init(projectile2.projSpeed, isEnemy);
                         projectile2.SetDirection(new Vector3(Mathf.Cos(f), Mathf.Sin(f), 0));
                     }
 
@@ -100,7 +98,7 @@ public class Weapon : MonoBehaviour
     {
         Projectile projectile = Instantiate(projPrefab);
         projectile.transform.position = transform.position + (Vector3)projStartPoint;
-        projectile.Init(projSpeed, isEnemy);
+        projectile.Init(projectile.projSpeed, isEnemy);
         return projectile;
     }
 
