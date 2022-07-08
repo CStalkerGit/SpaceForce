@@ -93,11 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e477ed2034c792f49bd5369bf2faf7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.5
-  health: 3
-  animationSprites: []
-  animationSpeed: 0.25
-  wavePattern: 0
+  hitboxType: 0
+  hitboxRadius: {x: 0, y: 0}
+  health: 40
 --- !u!114 &114440674774449360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec01b37aa4d9e44f96cec379f365cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pattern: 2
-  vertSpeed: 3
-  horSpeed: 4
+  pattern: 0
+  timer: 15
+  vertSpeed: 4
+  horSpeed: 5
