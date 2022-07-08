@@ -67,7 +67,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2134550509
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300012, guid: 1c55b1ea91baac34d822f1184453415a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,9 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e070028a26320942b0da61296ae29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.6
-  isEnemy: 0
+  hitboxType: 0
+  hitboxRadius: {x: 0, y: 0}
   health: 1
-  animationSprites: []
-  animationSpeed: 0.25
-  damage: 1
+  damage: 10
+  continuousDamage: 0
+  projSpeed: 4

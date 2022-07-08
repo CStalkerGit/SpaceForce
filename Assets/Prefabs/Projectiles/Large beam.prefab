@@ -114,8 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e070028a26320942b0da61296ae29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.8
+  hitboxType: 1
+  hitboxRadius: {x: 0.75, y: 2}
   health: 1
-  damage: 3
+  damage: 2
   continuousDamage: 1
   projSpeed: 15

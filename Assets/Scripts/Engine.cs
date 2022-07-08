@@ -56,7 +56,7 @@ public class Engine : MonoBehaviour
         if (Player.IsPlayerDead()) changeScene = true;
 
         // проверка на конец карты
-        if (map.IsMapEnd()) changeScene = true;
+        //if (map.IsMapEnd()) changeScene = true;
     }
 
     /// <summary>

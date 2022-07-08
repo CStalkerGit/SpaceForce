@@ -7,7 +7,8 @@ public enum FireMode
     Random,
     ToDirection,
     NearestEnemy,
-    Spread
+    Spread,
+    Double
 }
 
 public class Weapon : MonoBehaviour
@@ -83,14 +84,25 @@ public class Weapon : MonoBehaviour
                     for (float f = -Mathf.PI; f < Mathf.PI; f += Mathf.PI / 4)
                     {
                         Projectile projectile2 = NewProjectile();
-                        projectile2.Init(projectile2.projSpeed, isEnemy);
+                        projectile2.Init(isEnemy);
                         projectile2.SetDirection(new Vector3(Mathf.Cos(f), Mathf.Sin(f), 0));
                     }
 
                     break;
                 }
 
-            default: throw new System.Exception("fireDirection is unknown");
+            case FireMode.Double:
+                {
+                    projectile.SetDirection(toDirection);
+
+                    projectile = NewProjectile();
+                    projectile.transform.position = transform.position 
+                        + new Vector3(-projStartPoint.x, projStartPoint.y, transform.position.z);
+                    projectile.SetDirection(toDirection);
+                    break;
+                }
+
+            default: throw new System.ArgumentException("fireDirection is unknown");
         }
     }
 
@@ -98,7 +110,7 @@ public class Weapon : MonoBehaviour
     {
         Projectile projectile = Instantiate(projPrefab);
         projectile.transform.position = transform.position + (Vector3)projStartPoint;
-        projectile.Init(projectile.projSpeed, isEnemy);
+        projectile.Init(isEnemy);
         return projectile;
     }
 

@@ -9,7 +9,7 @@ public class Enemy : Entity
         base.FixedUpdate();
 
         // Delete the enemy on player collision
-        if (Player.TestHit(this)) Kill();
+        if (Player.TestHit(this, health / 2)) Kill();
     }
 
     // override methods

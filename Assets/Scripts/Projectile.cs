@@ -9,10 +9,9 @@ public class Projectile : Entity
     public int damage = 1;
     public bool continuousDamage;
     [Tooltip("Скорость полета снаряда, тайлы/секунда")]
-    public float projSpeed = 4.0f;
+    public float projSpeed;
 
     // physics
-    private float speed;
     private Vector3 velocity;
     private bool isEnemy;
 
@@ -25,7 +24,7 @@ public class Projectile : Entity
         if (isEnemy)
         {
             // проверка столкновения снарядов врагов с игроком
-            if (Player.TestHit(this)) Kill();
+            if (Player.TestHit(this, damage)) Kill();
         }
         else
         {
@@ -35,7 +34,7 @@ public class Projectile : Entity
             {
                 // наносим урон врагу и уничтожаем снаряд
                 enemy.Damage(damage);
-                if (!continuousDamage) Kill();
+                if (!continuousDamage) Kill(true);
             }
         }
 
@@ -48,10 +47,9 @@ public class Projectile : Entity
     /// </summary>
     /// <param name="projSpeed">скорость снаряда тайлы/сек.</param>
     /// <param name="isEnemy">является ли снаряд вражеским или принадлежит игроку</param>
-    public void Init(float projSpeed, bool isEnemy)
+    public void Init(bool isEnemy)
     {
         this.isEnemy = isEnemy;
-        speed = projSpeed;
     }
 
     /// <summary>
@@ -60,9 +58,7 @@ public class Projectile : Entity
     /// <param name="direction">точка назначения</param>
     public void SetDestination(Vector3 destination)
     {
-        velocity = destination - transform.position;
-        velocity.Normalize();
-        velocity *= speed;
+        SetDirection(destination - transform.position);
     }
 
     /// <summary>
@@ -72,7 +68,7 @@ public class Projectile : Entity
     public void SetDirection(Vector3 direction)
     {
         direction.Normalize();
-        velocity = direction * speed;
+        velocity = direction * projSpeed;
     }
 
     // override methods
@@ -86,5 +82,10 @@ public class Projectile : Entity
     protected override void UnregEntity()
     {
 
+    }
+
+    protected override void OnKillByEntity()
+    {
+        Engine.CreateExplosionEffect(transform.position);
     }
 }

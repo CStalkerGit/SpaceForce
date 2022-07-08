@@ -5,8 +5,8 @@ using UnityEngine;
 public class Player : Entity
 {
     public float speed;
-    public const int maxHealth = 5;
-    public const float invulnTime = 2.0f; // время неуязвимости после столкновения с врагом
+    public const int maxHealth = 100;
+    public const float invulnTime = 0.1f; // время неуязвимости после столкновения с врагом
 
     public static Vector3 position { get; private set; }
 
@@ -71,7 +71,7 @@ public class Player : Entity
         position = transform.position;
 
         // обновить время временной неуязвимости
-        if (invulnerabilityTime > 0)
+        if (invulnerabilityTime > -1)
         {
             invulnerabilityTime -= Time.deltaTime;
             if (invulnerabilityTime < 0)
@@ -90,7 +90,7 @@ public class Player : Entity
         }
     }
 
-    public static bool TestHit(Entity entity)
+    public static bool TestHit(Entity entity, int dmg)
     {
         if (!instance) return false;
 
@@ -99,7 +99,7 @@ public class Player : Entity
             if (invulnerabilityTime < 0)
             {
                 SetInvulnerability(invulnTime); // временная неуязвимость
-                instance.Damage(1); // отнимаем одно сердечко
+                instance.Damage(dmg);
                 HUD.UpdateHealthBar(instance.health);
             }
             return true;

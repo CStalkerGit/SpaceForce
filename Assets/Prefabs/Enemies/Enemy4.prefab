@@ -94,10 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e477ed2034c792f49bd5369bf2faf7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.5
-  health: 2
-  animationSprites: []
-  animationSpeed: 0.25
+  hitboxType: 0
+  hitboxRadius: {x: 0, y: 0}
+  health: 20
 --- !u!114 &114440674774449360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pattern: 0
-  vertSpeed: 3
+  timer: 5
+  vertSpeed: 5
   horSpeed: 3
 --- !u!114 &114987959807686934
 MonoBehaviour:
@@ -132,4 +132,3 @@ MonoBehaviour:
   projStartPoint: {x: 0, y: 0}
   projPrefab: {fileID: 8317650357689115552, guid: 336348dfdd1b3174d8e9b09db3c72b03,
     type: 3}
-  projSpeed: 8

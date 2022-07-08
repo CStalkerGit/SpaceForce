@@ -92,13 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e070028a26320942b0da61296ae29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxRadius: 0.25
-  isEnemy: 1
+  hitboxType: 1
+  hitboxRadius: {x: 0.3, y: 0.3}
   health: 1
-  animationSprites:
-  - {fileID: 21300000, guid: 1c55b1ea91baac34d822f1184453415a, type: 3}
-  - {fileID: 21300002, guid: 1c55b1ea91baac34d822f1184453415a, type: 3}
-  - {fileID: 21300004, guid: 1c55b1ea91baac34d822f1184453415a, type: 3}
-  - {fileID: 21300002, guid: 1c55b1ea91baac34d822f1184453415a, type: 3}
-  animationSpeed: 0.1
-  damage: 1
+  damage: 10
+  continuousDamage: 0
+  projSpeed: 6

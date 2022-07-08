@@ -93,8 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fc2bda31e93994c9aadec63e05e416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: 1
-  offset: {x: 12, y: 0}
+  orientation: 2
+  offset: {x: 0, y: -14}
 --- !u!114 &2348682455598230538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,8 +110,7 @@ MonoBehaviour:
   firerate: 1.2
   automaticFire: 1
   fireMode: 1
-  toDirection: {x: 0, y: 1, z: 0}
-  projStartPoint: {x: 0, y: 0.6}
+  toDirection: {x: 0, y: -1, z: 0}
+  projStartPoint: {x: 0, y: -0.6}
   projPrefab: {fileID: 4894300317469149150, guid: 60776f97c72e7fb428b83c099739e3fb,
     type: 3}
-  projSpeed: 16

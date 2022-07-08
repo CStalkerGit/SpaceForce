@@ -18,6 +18,9 @@ public class GameMap : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // зацикливание карты
+        if (transform.position.y < -tilemap.size.y) tilemapPos.y = Engine.heightInTiles;
+
         // вертикальный скроллинг карты вниз
         tilemapPos.y -= Engine.scrollingSpeed * Time.deltaTime;
         transform.position = tilemapPos;
@@ -41,12 +44,6 @@ public class GameMap : MonoBehaviour
         // выход за верхнюю границу экрана, если нужно проверить
         if (upperBorder && (position.y > (height / 2 + offset))) return true;
 
-        return false;
-    }
-
-    public bool IsMapEnd()
-    {
-        if (transform.position.y < -tilemap.size.y - 8) return true;
         return false;
     }
 

@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum HitboxType
+{
+    Default,
+    Custom,
+    SmallProj
+}
+
 public class Entity : MonoBehaviour
 {
     // data
     [Header("Data")]
-    [Tooltip("Размер хитбокса в тайлах")]
-    public float hitboxRadius = 0.5f;
+    [Tooltip("Размер CollisionBox")]
+    public HitboxType hitboxType;
+    [Tooltip("Размер хитбокса в тайлах для Custom HitboxType")]
+    public Vector2 hitboxRadius;
     public int health = 1;
 
     // properties 
@@ -24,6 +33,17 @@ public class Entity : MonoBehaviour
     protected void Awake()
     {
         isTileObject = GetComponent<Structure>();
+
+        switch (hitboxType)
+        {
+            case HitboxType.Default:
+                hitboxRadius.Set(0.5f, 0.5f);
+                break;
+
+            case HitboxType.SmallProj:
+                hitboxRadius.Set(0.25f, 0.6f);
+                break;
+        }
     }
 
     private void Start()
@@ -33,7 +53,7 @@ public class Entity : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (Engine.OutOfBounds(transform.position, false)) Kill();
+        if (Engine.OutOfBounds(transform.position, false) && !isTileObject) Kill();
 
         // interpolation
         //smoothBegin = smoothEnd;
@@ -43,7 +63,7 @@ public class Entity : MonoBehaviour
     void OnDrawGizmos()
     {
         // отрисовка хитбокса объекта в режиме отладки
-        Gizmos.DrawWireCube(transform.position, new Vector3(hitboxRadius * 2, hitboxRadius * 2, 0.01f));
+        Gizmos.DrawWireCube(transform.position, new Vector3(hitboxRadius.x * 2, hitboxRadius.y * 2, 0.01f));
     }
 
     public bool IsCollission(Entity entity)
@@ -55,8 +75,8 @@ public class Entity : MonoBehaviour
         if (IsDead) return false;
 
         // проверка на столкновение хитбоксов двух объектов
-        if (Mathf.Abs(PosX - entity.PosX) > (hitboxRadius + entity.hitboxRadius)) return false;
-        if (Mathf.Abs(PosY - entity.PosY) > (hitboxRadius + entity.hitboxRadius)) return false;
+        if (Mathf.Abs(PosX - entity.PosX) > (hitboxRadius.x + entity.hitboxRadius.x)) return false;
+        if (Mathf.Abs(PosY - entity.PosY) > (hitboxRadius.y + entity.hitboxRadius.y)) return false;
 
         // столкновение произошло
         return true;

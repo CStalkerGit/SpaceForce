@@ -44,6 +44,7 @@ public class Upgrade : MonoBehaviour
                     if (sideUpgrade) Destroy(child.gameObject); else sideUpgrade = child;
                     continue;
                 }
+                else Destroy(child.gameObject);
             }
         }
         var upgrade = Instantiate(upgradePrefab, parent);

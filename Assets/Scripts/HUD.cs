@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public Image[] imgHP;
-
+    public Image hpBar;
     static HUD instance;
 
     // Start is called before the first frame update
@@ -17,11 +16,7 @@ public class HUD : MonoBehaviour
 
     public static void UpdateHealthBar(int countHP)
     {
-        if (!instance) return;
-
-        for (int i = 0; i < instance.imgHP.Length; i++)
-        {
-            instance.imgHP[i].gameObject.SetActive(countHP < i + 1 ? false : true);
-        }
+        float scale = countHP / 100.0f;
+        instance.hpBar.transform.localScale = new Vector3(scale, 1, 1);
     }
 }
