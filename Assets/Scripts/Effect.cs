@@ -51,10 +51,10 @@ public class Effect : MonoBehaviour
     /// </summary>
     void Kill()
     {
-        if (gameObject.activeSelf)
+        if (spriteRenderer.enabled)
         {
-            gameObject.SetActive(false); // сразу скрыть объект с экрана до полного уничтожения
-            Destroy(gameObject);
+            spriteRenderer.enabled = false; // сразу скрыть объект с экрана до полного уничтожения
+            Destroy(gameObject, 1.0f);
         }
     }
 }

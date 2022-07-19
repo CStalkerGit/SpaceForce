@@ -11,13 +11,10 @@ public class Player : Entity
     public static Vector3 position { get; private set; }
 
     private static Player instance;
-    private static float invulnerabilityTime = -1; // временная неуязвимость после столкновения с врагом
-    private SpriteRenderer sprShield; // спрайт защитного поля для эффекта неуязвимости
 
     private void Start()
     {
         instance = this;
-        sprShield = transform.Find("Shield").GetComponent<SpriteRenderer>();
 
         HUD.UpdateHealthBar(health);
     }
@@ -70,17 +67,6 @@ public class Player : Entity
         // позиция игрока для стрельбы врагами по нему 
         position = transform.position;
 
-        // обновить время временной неуязвимости
-        if (invulnerabilityTime > -1)
-        {
-            invulnerabilityTime -= Time.deltaTime;
-            if (invulnerabilityTime < 0)
-            {
-                invulnerabilityTime = -1;
-                instance.sprShield.gameObject.SetActive(false); // убрать защитное поле вокруг игрока
-            }
-        }
-
         // проверка на находящиеся поблизости бонусы, которые может подобрать игрок
         PowerUp bonus = Engine.IsBonusCollision(this);
         if (bonus)
@@ -96,26 +82,11 @@ public class Player : Entity
 
         if (instance.IsCollission(entity))
         {
-            if (invulnerabilityTime < 0)
-            {
-                SetInvulnerability(invulnTime); // временная неуязвимость
-                instance.Damage(dmg);
-                HUD.UpdateHealthBar(instance.health);
-            }
+            instance.Damage(dmg);
+            HUD.UpdateHealthBar(instance.health);
             return true;
         }
         return false;
-    }
-
-    /// <summary>
-    /// Включить временную неуязвимость
-    /// </summary>
-    public static void SetInvulnerability(float timeInSeconds)
-    {
-        if (!instance) return;
-
-        invulnerabilityTime = timeInSeconds;
-        instance.sprShield.gameObject.SetActive(true); // показать защитное поле вокруг игрока
     }
 
     public static void RestoreHealth(int amountHealth)

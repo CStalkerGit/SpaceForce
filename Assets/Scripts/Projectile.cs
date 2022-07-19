@@ -15,9 +15,17 @@ public class Projectile : Entity
     private Vector3 velocity;
     private bool isEnemy;
 
+    new protected void Awake()
+    {
+        base.Awake();
+        var snd = GetComponent<AudioSource>();
+        if (snd) snd.pitch = Random.Range(0.9f, 1.0f);
+    }
+
     new void FixedUpdate()
     {
         base.FixedUpdate();
+        if (IsDead) return;
 
         transform.position += velocity * Time.deltaTime;
         

@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class Menu: MonoBehaviour
 {
-    public string nextScene;
 
-    public void OnStart()
+    // Start is called before the first frame update
+    void Awake()
     {
-        SceneManager.LoadScene(nextScene);
+
     }
+
 }

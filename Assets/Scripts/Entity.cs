@@ -105,7 +105,15 @@ public class Entity : MonoBehaviour
         IsDead = true;
         UnregEntity();
 
-        Destroy(gameObject);
+        var snd = GetComponent<AudioSource>();
+        if (snd != null && snd.isPlaying)
+        {
+            Destroy(gameObject, 0.75f);
+            var spr = GetComponent<SpriteRenderer>();
+            if (spr != null) spr.enabled = false;
+        }
+        else Destroy(gameObject);
+
         if (byEntity) OnKillByEntity(); // нужно вызывать в самом конце
     }
 

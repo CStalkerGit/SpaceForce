@@ -7,7 +7,8 @@ using UnityEngine.Tilemaps;
 public class Engine : MonoBehaviour
 {
     public GameMap map;
-    public Effect explosionPrefab; 
+    public Effect explosionPrefab;
+    public AudioClip sndExplosion;
 
     // interpolation
     public static float alpha = 0;
@@ -22,12 +23,15 @@ public class Engine : MonoBehaviour
     public static List<Entity> enemies = new List<Entity>();
     public static List<Entity> bonuses = new List<Entity>();
 
+    public static bool IsPaused {get; set;}
+
     // для смены сцены в случае победы или поражения
     private bool changeScene = false;
     private float changeSceneTime = 2.5f;
 
     Engine()
     {
+        IsPaused = false;
         Instance = this;
     }
 
@@ -40,6 +44,11 @@ public class Engine : MonoBehaviour
     void Update()
     {
         alpha = (Time.time - Time.fixedTime) / Time.fixedDeltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!IsPaused) Options.Show(); else Options.Hide();
+        }
     }
 
     private void FixedUpdate()
@@ -48,7 +57,7 @@ public class Engine : MonoBehaviour
         if (changeScene)
         {
             changeSceneTime -= Time.deltaTime;
-            if (changeSceneTime < 0) SceneManager.LoadScene("TitleScreen");
+            if (changeSceneTime < 0) Exit();
             return;
         }
 
@@ -57,6 +66,11 @@ public class Engine : MonoBehaviour
 
         // проверка на конец карты
         //if (map.IsMapEnd()) changeScene = true;
+    }
+
+    public void Exit()
+    {
+        SceneManager.LoadScene("TitleScreen");
     }
 
     /// <summary>

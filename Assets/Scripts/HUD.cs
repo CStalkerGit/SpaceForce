@@ -17,6 +17,7 @@ public class HUD : MonoBehaviour
     public static void UpdateHealthBar(int countHP)
     {
         float scale = countHP / 100.0f;
+        scale = Mathf.Clamp(scale, 0.0f, 1.0f);
         instance.hpBar.transform.localScale = new Vector3(scale, 1, 1);
     }
 }
