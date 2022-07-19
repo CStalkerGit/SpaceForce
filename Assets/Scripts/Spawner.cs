@@ -9,11 +9,10 @@ public class Spawner : MonoBehaviour
     public Enemy[] enemyPrefabs;
 
     private int waveCount;
-    private int maxWaves = 2;
     private float spawnDelay = spawnDelayTime;
 
     // время в миллисекундах до спавна следующей волны
-    const float spawnDelayTime = 0.0f;
+    const float spawnDelayTime = 1.0f;
     // граница спавна по горизонтали с небольшим отступом от краев экрана
     const float spawnBorderX = (Engine.widthInTiles - 1) / 2;
     // граница спавна по вертикали, за пределами экрана
@@ -28,7 +27,15 @@ public class Spawner : MonoBehaviour
             // отсрочка спавна
             spawnDelay -= Time.deltaTime;
 
-            if (spawnDelay <= 0 && waveCount < maxWaves) NextWave();
+            if (spawnDelay <= 0)
+            {
+                if (waveCount < enemyPrefabs.Length) NextWave();
+                else
+                {
+                    Engine.EndStage(true);
+                    spawnDelay = 10;
+                }
+            }
         }
     }
 
@@ -38,14 +45,14 @@ public class Spawner : MonoBehaviour
 
         spawnDelay = spawnDelayTime;
         if (enemyPrefabs.Length == 0) return;
-        var enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+        var enemy = enemyPrefabs[waveCount - 1]; //enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
 
         RandomPattern(enemy);
     }
 
     void RandomPattern(Enemy enemy)
     {
-        int count = Random.Range(10, 15);
+        int count = Random.Range(7, 12) + waveCount * 2;
 
         for (int i = 0; i < count; i++)
         {

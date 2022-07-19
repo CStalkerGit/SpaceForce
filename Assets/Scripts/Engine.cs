@@ -26,7 +26,8 @@ public class Engine : MonoBehaviour
     public static bool IsPaused {get; set;}
 
     // для смены сцены в случае победы или поражения
-    private bool changeScene = false;
+    private bool changeScene;
+    private bool victory;
     private float changeSceneTime = 2.5f;
 
     Engine()
@@ -62,15 +63,24 @@ public class Engine : MonoBehaviour
         }
 
         // проверка на гибель игрока
-        if (Player.IsPlayerDead()) changeScene = true;
+        if (Player.IsPlayerDead()) EndStage(false);
 
         // проверка на конец карты
         //if (map.IsMapEnd()) changeScene = true;
     }
 
+    public static void EndStage(bool victory)
+    {
+        if (Instance.changeScene) return;
+
+        Instance.victory = victory;
+        Instance.changeScene = true;
+    }
+
     public void Exit()
     {
-        SceneManager.LoadScene("TitleScreen");
+        if (victory) SceneManager.LoadScene("EndStage");
+        else SceneManager.LoadScene("TitleScreen");
     }
 
     /// <summary>
